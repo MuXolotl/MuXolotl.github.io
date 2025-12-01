@@ -9,6 +9,7 @@ const translations = {
         'nav.games': 'Игры',
         'nav.contact': 'Контакты',
         'nav.back': 'На главную',
+        'nav.back_short': 'Главная',
         
         // Hero
         'hero.subtitle': 'Разрабатываю программы и игры. Все проекты с открытым исходным кодом.',
@@ -108,6 +109,7 @@ const translations = {
         'nav.games': 'Games',
         'nav.contact': 'Contact',
         'nav.back': 'Back to home',
+        'nav.back_short': 'Home',
         
         // Hero
         'hero.subtitle': 'Developing software and games. All projects are open source.',
@@ -308,24 +310,38 @@ function initSmoothScroll() {
     });
 }
 
-// ===== GitHub API статистика =====
+// ===== GitHub API статистика с кешированием =====
 async function fetchGitHubStats(repo) {
+    const CACHE_KEY = `gh_stats_${repo}`;
+    const CACHE_EXPIRATION_MS = 60 * 60 * 1000; // 1 час жизни кеша
+
     try {
-        // Получаем данные репозитория
+        // 1. Проверяем кеш
+        const cachedRaw = localStorage.getItem(CACHE_KEY);
+        if (cachedRaw) {
+            const { timestamp, data } = JSON.parse(cachedRaw);
+            // Если кеш свежий (меньше 1 часа), возвращаем его
+            if (Date.now() - timestamp < CACHE_EXPIRATION_MS) {
+                console.log('Using cached GitHub stats');
+                return data;
+            }
+        }
+
+        // 2. Если кеша нет или он протух — делаем запрос
+        console.log('Fetching new GitHub stats...');
         const repoResponse = await fetch(`https://api.github.com/repos/${repo}`);
+        if (!repoResponse.ok) throw new Error('Repo fetch failed');
         const repoData = await repoResponse.json();
         
-        // Получаем данные о релизах для подсчёта скачиваний
         const releasesResponse = await fetch(`https://api.github.com/repos/${repo}/releases`);
+        if (!releasesResponse.ok) throw new Error('Releases fetch failed');
         const releasesData = await releasesResponse.json();
         
         let totalDownloads = 0;
         let lastReleaseDate = null;
         
         if (Array.isArray(releasesData) && releasesData.length > 0) {
-            // Дата последнего релиза
             lastReleaseDate = releasesData[0].published_at;
-            
             releasesData.forEach(release => {
                 release.assets?.forEach(asset => {
                     totalDownloads += asset.download_count;
@@ -333,14 +349,28 @@ async function fetchGitHubStats(repo) {
             });
         }
         
-        return {
+        const result = {
             stars: repoData.stargazers_count || 0,
             forks: repoData.forks_count || 0,
             downloads: totalDownloads,
             lastRelease: lastReleaseDate
         };
+
+        // 3. Сохраняем в кеш
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+            timestamp: Date.now(),
+            data: result
+        }));
+        
+        return result;
+
     } catch (error) {
         console.error('Failed to fetch GitHub stats:', error);
+        // Если запрос упал, пробуем вернуть старый кеш, даже если он протух
+        const cachedRaw = localStorage.getItem(CACHE_KEY);
+        if (cachedRaw) {
+            return JSON.parse(cachedRaw).data;
+        }
         return null;
     }
 }
