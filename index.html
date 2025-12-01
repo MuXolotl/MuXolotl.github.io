@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuXolotl — Программы и игры</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Фоновые декоративные блобы */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: #3b82f6;
+            top: 10%;
+            left: -10%;
+            animation: float 20s ease-in-out infinite;
+        }
+        .blob-2 {
+            width: 300px;
+            height: 300px;
+            background: #8b5cf6;
+            top: 60%;
+            right: -5%;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+        .blob-3 {
+            width: 250px;
+            height: 250px;
+            background: #6366f1;
+            bottom: 10%;
+            left: 20%;
+            animation: float 18s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen overflow-x-hidden">
+    <!-- Декоративные фоновые блобы -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Навигация -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#" class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center font-bold text-lg">
+                        M
+                    </div>
+                    <span class="text-xl font-semibold">MuXolotl</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#about" class="nav-link text-gray-300 hover:text-white transition">О нас</a>
+                    <a href="#software" class="nav-link text-gray-300 hover:text-white transition">Программы</a>
+                    <a href="#games" class="nav-link text-gray-300 hover:text-white transition">Игры</a>
+                    <a href="#contact" class="nav-link text-gray-300 hover:text-white transition">Контакты</a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+            <!-- Мобильное меню -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-800 pt-4">
+                <div class="flex flex-col gap-4">
+                    <a href="#about" class="text-gray-300 hover:text-white transition">О нас</a>
+                    <a href="#software" class="text-gray-300 hover:text-white transition">Программы</a>
+                    <a href="#games" class="text-gray-300 hover:text-white transition">Игры</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white transition">Контакты</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero секция -->
+    <section class="pt-32 pb-20 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto text-center">
+            <!-- 
+                ЛОГОТИП: Замени div ниже на свой логотип:
+                <img src="images/logo.png" alt="MuXolotl" class="w-24 h-24 mx-auto mb-8 rounded-2xl shadow-2xl shadow-purple-500/20">
+            -->
+            <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center font-bold text-4xl mx-auto mb-8 shadow-2xl shadow-purple-500/20">
+                M
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                <span class="gradient-text">MuXolotl</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                Разрабатываю программы и игры. Все проекты с открытым исходным кодом.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#software" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-medium hover:opacity-90 transition">
+                    Мои проекты
+                </a>
+                <a href="#contact" class="px-8 py-3 border border-gray-700 rounded-lg font-medium hover:bg-gray-800 transition">
+                    Связаться
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- О проекте -->
+    <section id="about" class="py-20 px-6 bg-gray-900/50 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4">О проекте</h2>
+            <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6 text-center card-hover">
+                    <div class="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Программы</h3>
+                    <p class="text-gray-400 text-sm">Утилиты для повседневных задач</p>
+                </div>
+                
+                <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6 text-center card-hover">
+                    <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Игры</h3>
+                    <p class="text-gray-400 text-sm">Игровые проекты в разработке</p>
+                </div>
+                
+                <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6 text-center card-hover">
+                    <div class="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-7 h-7 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Open Source</h3>
+                    <p class="text-gray-400 text-sm">Весь код открыт на GitHub</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Программы -->
+    <section id="software" class="py-20 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4">Программы</h2>
+            <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- MuXolotl-Converter -->
+                <a href="converter.html" class="bg-gray-800/50 border border-gray-700/50 rounded-xl overflow-hidden card-hover block">
+                    <!-- 
+                        СКРИНШОТ ПРОГРАММЫ: Замени div ниже на скриншот:
+                        <img src="images/converter-screenshot.png" alt="MuXolotl-Converter" class="h-40 w-full object-cover">
+                    -->
+                    <div class="h-40 bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-lg font-semibold">MuXolotl-Converter</h3>
+                            <span class="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full font-medium">v1.0.2</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">Конвертер медиафайлов с простым интерфейсом</p>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded">В разработке</span>
+                            <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Open Source</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Placeholder для будущих проектов -->
+                <div class="bg-gray-800/30 border border-dashed border-gray-700/50 rounded-xl p-6 flex flex-col items-center justify-center min-h-[280px] text-center">
+                    <svg class="w-12 h-12 text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    <p class="text-gray-500">Новые проекты скоро</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Игры -->
+    <!-- 
+        ШАБЛОН КАРТОЧКИ ИГРЫ (скопируй и заполни когда появится игра):
+        
+        <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl overflow-hidden card-hover">
+            <img src="images/game-screenshot.png" alt="Название игры" class="h-48 w-full object-cover">
+            <div class="p-6">
+                <h3 class="text-lg font-semibold mb-2">Название игры</h3>
+                <p class="text-gray-400 text-sm mb-4">Описание игры...</p>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="px-2 py-1 bg-purple-500/20 text-purple-400 text-xs rounded">Жанр</span>
+                    <a href="#" class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded hover:bg-green-500/30 transition">Играть</a>
+                </div>
+            </div>
+        </div>
+    -->
+    <section id="games" class="py-20 px-6 bg-gray-900/50 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4">Игры</h2>
+            <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
+            
+            <div class="text-center py-16">
+                <div class="w-20 h-20 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 text-gray-200">Скоро</h3>
+                <p class="text-gray-400 max-w-md mx-auto">
+                    Игровые проекты в процессе разработки
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contact" class="py-20 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4">Контакты</h2>
+            <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
+            
+            <div class="max-w-xl mx-auto text-center">
+                <p class="text-gray-400 mb-8">
+                    Есть вопросы, идеи или просто хочешь написать? Найди меня на GitHub.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="https://github.com/MuXolotl" target="_blank" class="flex items-center justify-center gap-3 px-6 py-3 bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                    <!-- 
+                        ДОПОЛНИТЕЛЬНЫЕ КОНТАКТЫ: Раскомментируй и заполни при необходимости:
+                        
+                        <a href="mailto:your@email.com" class="flex items-center justify-center gap-3 px-6 py-3 bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Email
+                        </a>
+                        
+                        <a href="https://t.me/username" target="_blank" class="flex items-center justify-center gap-3 px-6 py-3 bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                            </svg>
+                            Telegram
+                        </a>
+                    -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center font-bold text-sm">
+                    M
+                </div>
+                <span class="text-gray-400">© 2025 MuXolotl. Все права защищены.</span>
+            </div>
+            <div class="flex items-center gap-6 text-sm text-gray-500">
+                <a href="#about" class="hover:text-gray-300 transition">О нас</a>
+                <a href="#software" class="hover:text-gray-300 transition">Программы</a>
+                <a href="#games" class="hover:text-gray-300 transition">Игры</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Мобильное меню
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Закрытие меню при клике на ссылку
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Анимация появления элементов при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Плавный скролл для навигации
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
