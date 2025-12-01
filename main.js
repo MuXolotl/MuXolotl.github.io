@@ -96,7 +96,10 @@ const translations = {
         'formats.audio.count': '21 формат',
         'formats.video': 'Видео',
         'formats.video.count': '22 формата',
-        'formats.note': 'Конвертация работает на базе FFmpeg — поддерживаются практически все популярные форматы'
+        'formats.note': 'Конвертация работает на базе FFmpeg — поддерживаются практически все популярные форматы',
+        
+        // Поделиться
+        'share.title': 'Поделиться:'
     },
     en: {
         // Navigation
@@ -192,7 +195,10 @@ const translations = {
         'formats.audio.count': '21 formats',
         'formats.video': 'Video',
         'formats.video.count': '22 formats',
-        'formats.note': 'Conversion is powered by FFmpeg — almost all popular formats are supported'
+        'formats.note': 'Conversion is powered by FFmpeg — almost all popular formats are supported',
+        
+        // Share
+        'share.title': 'Share:'
     }
 };
 
@@ -314,7 +320,12 @@ async function fetchGitHubStats(repo) {
         const releasesData = await releasesResponse.json();
         
         let totalDownloads = 0;
-        if (Array.isArray(releasesData)) {
+        let lastReleaseDate = null;
+        
+        if (Array.isArray(releasesData) && releasesData.length > 0) {
+            // Дата последнего релиза
+            lastReleaseDate = releasesData[0].published_at;
+            
             releasesData.forEach(release => {
                 release.assets?.forEach(asset => {
                     totalDownloads += asset.download_count;
@@ -325,7 +336,8 @@ async function fetchGitHubStats(repo) {
         return {
             stars: repoData.stargazers_count || 0,
             forks: repoData.forks_count || 0,
-            downloads: totalDownloads
+            downloads: totalDownloads,
+            lastRelease: lastReleaseDate
         };
     } catch (error) {
         console.error('Failed to fetch GitHub stats:', error);
@@ -333,10 +345,51 @@ async function fetchGitHubStats(repo) {
     }
 }
 
+// Форматирование относительной даты
+function formatRelativeDate(dateString) {
+    if (!dateString) return null;
+    
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    
+    if (currentLang === 'ru') {
+        if (diffDays === 0) return 'сегодня';
+        if (diffDays === 1) return 'вчера';
+        if (diffDays < 7) return `${diffDays} ${pluralize(diffDays, 'день', 'дня', 'дней')} назад`;
+        if (diffDays < 30) {
+            const weeks = Math.floor(diffDays / 7);
+            return `${weeks} ${pluralize(weeks, 'неделю', 'недели', 'недель')} назад`;
+        }
+        if (diffDays < 365) {
+            const months = Math.floor(diffDays / 30);
+            return `${months} ${pluralize(months, 'месяц', 'месяца', 'месяцев')} назад`;
+        }
+        const years = Math.floor(diffDays / 365);
+        return `${years} ${pluralize(years, 'год', 'года', 'лет')} назад`;
+    } else {
+        if (diffDays === 0) return 'today';
+        if (diffDays === 1) return 'yesterday';
+        if (diffDays < 7) return `${diffDays} days ago`;
+        if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+        if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
+        return `${Math.floor(diffDays / 365)} years ago`;
+    }
+}
+
+// Склонение слов (для русского)
+function pluralize(n, one, few, many) {
+    if (n % 10 === 1 && n % 100 !== 11) return one;
+    if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return few;
+    return many;
+}
+
 function updateGitHubStatsUI(stats) {
     const starsEl = document.querySelector('[data-stat="stars"] .count');
     const forksEl = document.querySelector('[data-stat="forks"] .count');
     const downloadsEl = document.querySelector('[data-stat="downloads"] .count');
+    const lastUpdateEl = document.getElementById('lastUpdate');
     
     if (starsEl && stats) {
         starsEl.textContent = stats.stars;
@@ -350,6 +403,49 @@ function updateGitHubStatsUI(stats) {
         downloadsEl.textContent = stats.downloads;
         downloadsEl.closest('.github-stat')?.classList.remove('loading');
     }
+    if (lastUpdateEl && stats?.lastRelease) {
+        const relativeDate = formatRelativeDate(stats.lastRelease);
+        if (relativeDate) {
+            const prefix = currentLang === 'ru' ? 'Обновлено' : 'Updated';
+            lastUpdateEl.textContent = `${prefix} ${relativeDate}`;
+            lastUpdateEl.classList.remove('hidden');
+        }
+    }
+}
+
+// ===== Кнопки "Поделиться" =====
+function initShareButtons() {
+    const shareButtons = document.querySelectorAll('[data-share]');
+    
+    shareButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const platform = btn.dataset.share;
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            const text = encodeURIComponent(currentLang === 'ru' 
+                ? 'Конвертер медиафайлов с простым интерфейсом' 
+                : 'Media file converter with a simple interface');
+            
+            let shareUrl = '';
+            
+            switch(platform) {
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${url}&text=${title}`;
+                    break;
+                case 'reddit':
+                    shareUrl = `https://reddit.com/submit?url=${url}&title=${title}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
+        });
+    });
 }
 
 // ===== Определение мобильного устройства =====
@@ -419,6 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll();
     initLanguageSwitcher();
     initMobileWarning();
+    initShareButtons();
     
     // Загрузить GitHub статистику если есть элемент
     if (document.querySelector('.github-stats')) {
