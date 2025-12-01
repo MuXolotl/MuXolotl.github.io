@@ -93,12 +93,14 @@
             </div>
 
             <div class="flex flex-col md:flex-row items-start gap-8">
-                <!-- Иконка / скриншот -->
-                <!-- СКРИНШОТ: <img src="images/converter-screenshot.png" alt="MuXolotl-Converter" class="w-full md:w-80 rounded-2xl shadow-2xl"> -->
-                <div class="w-full md:w-80 h-48 md:h-56 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-gray-700/50">
-                    <svg class="w-24 h-24 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                    </svg>
+                <!-- Скриншот с увеличением по клику -->
+                <div class="w-full md:w-80 flex-shrink-0">
+                    <img 
+                        src="images/converter-screenshot.png" 
+                        alt="MuXolotl-Converter" 
+                        class="w-full rounded-2xl shadow-2xl border border-gray-700/50 cursor-zoom-in hover:border-blue-500/50 transition"
+                        onclick="openLightbox(this.src)"
+                    >
                 </div>
 
                 <!-- Информация -->
@@ -507,6 +509,12 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
         </svg>
     </button>
+
+    <!-- Лайтбокс для увеличенного изображения -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <img id="lightboxImg" src="" alt="Screenshot">
+    </div>
 
     <script src="main.js"></script>
     <script>
