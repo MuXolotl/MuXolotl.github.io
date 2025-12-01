@@ -4,56 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MuXolotl-Converter — Конвертер медиафайлов</title>
+    
+    <!-- SEO -->
+    <meta name="description" content="MuXolotl-Converter — бесплатный конвертер аудио и видео. Поддержка 40+ форматов: MP3, MP4, MKV, FLAC, WAV и других.">
+    <meta name="keywords" content="конвертер, converter, аудио, видео, mp3, mp4, mkv, flac, ffmpeg, open source, бесплатный">
+    <meta name="author" content="MuXolotl">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://muxolotl.github.io/converter.html">
+    <meta property="og:title" content="MuXolotl-Converter — Конвертер медиафайлов">
+    <meta property="og:description" content="Бесплатный конвертер аудио и видео. Поддержка 40+ форматов. Open Source.">
+    <!-- OG IMAGE: <meta property="og:image" content="https://muxolotl.github.io/images/converter-og.png"> -->
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MuXolotl-Converter — Конвертер медиафайлов">
+    <meta name="twitter:description" content="Бесплатный конвертер аудио и видео. Поддержка 40+ форматов. Open Source.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#030712">
+    
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { font-family: 'Inter', sans-serif; }
-        html { scroll-behavior: smooth; }
-        .gradient-text {
-            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            pointer-events: none;
-        }
-        .blob-1 {
-            width: 400px;
-            height: 400px;
-            background: #3b82f6;
-            top: 10%;
-            left: -10%;
-            animation: float 20s ease-in-out infinite;
-        }
-        .blob-2 {
-            width: 300px;
-            height: 300px;
-            background: #8b5cf6;
-            top: 60%;
-            right: -5%;
-            animation: float 25s ease-in-out infinite reverse;
-        }
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.05); }
-            66% { transform: translate(-20px, 20px) scale(0.95); }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen overflow-x-hidden">
+    <!-- Предупреждение для мобильных -->
+    <div id="mobileWarning" class="mobile-warning hidden">
+        <div class="mobile-warning-content">
+            <div class="mobile-warning-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            <h3 data-i18n="mobile.title">Только для компьютеров</h3>
+            <p data-i18n="mobile.desc">MuXolotl-Converter — десктопное приложение для Windows, macOS и Linux. На мобильных устройствах оно не работает.</p>
+            <button id="closeMobileWarning" class="mobile-warning-btn" data-i18n="mobile.btn">Понятно</button>
+        </div>
+    </div>
+
     <!-- Декоративные фоновые блобы -->
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div class="blob blob-1"></div>
@@ -70,12 +64,18 @@
                     </div>
                     <span class="text-xl font-semibold">MuXolotl</span>
                 </a>
-                <a href="index.html" class="text-gray-300 hover:text-white transition flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                    </svg>
-                    На главную
-                </a>
+                <div class="flex items-center gap-4">
+                    <div class="lang-switcher">
+                        <button class="lang-btn active" data-lang="ru">RU</button>
+                        <button class="lang-btn" data-lang="en">EN</button>
+                    </div>
+                    <a href="index.html" class="text-gray-300 hover:text-white transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        <span data-i18n="nav.back">На главную</span>
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
@@ -85,19 +85,16 @@
         <div class="max-w-4xl mx-auto">
             <!-- Хлебные крошки -->
             <div class="flex items-center gap-2 text-sm text-gray-500 mb-8">
-                <a href="index.html" class="hover:text-gray-300 transition">Главная</a>
+                <a href="index.html" class="hover:text-gray-300 transition">Home</a>
                 <span>/</span>
-                <a href="index.html#software" class="hover:text-gray-300 transition">Программы</a>
+                <a href="index.html#software" class="hover:text-gray-300 transition" data-i18n="nav.software">Программы</a>
                 <span>/</span>
                 <span class="text-gray-300">MuXolotl-Converter</span>
             </div>
 
             <div class="flex flex-col md:flex-row items-start gap-8">
                 <!-- Иконка / скриншот -->
-                <!-- 
-                    СКРИНШОТ: Замени div ниже на скриншот программы:
-                    <img src="images/converter-screenshot.png" alt="MuXolotl-Converter" class="w-full md:w-80 rounded-2xl shadow-2xl">
-                -->
+                <!-- СКРИНШОТ: <img src="images/converter-screenshot.png" alt="MuXolotl-Converter" class="w-full md:w-80 rounded-2xl shadow-2xl"> -->
                 <div class="w-full md:w-80 h-48 md:h-56 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-gray-700/50">
                     <svg class="w-24 h-24 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
@@ -111,16 +108,35 @@
                         <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-sm rounded-full font-medium">v1.0.2</span>
                     </div>
                     
-                    <p class="text-lg text-gray-400 mb-6">
+                    <p class="text-lg text-gray-400 mb-6" data-i18n="converter.subtitle">
                         Конвертер медиафайлов с простым и понятным интерфейсом. Конвертируй аудио и видео в нужный формат.
                     </p>
 
-                    <div class="flex flex-wrap gap-2 mb-8">
-                        <span class="px-3 py-1 bg-amber-500/20 text-amber-400 text-sm rounded-full">В разработке</span>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-amber-500/20 text-amber-400 text-sm rounded-full" data-i18n="software.indev">В разработке</span>
                         <span class="px-3 py-1 bg-green-500/20 text-green-400 text-sm rounded-full">Open Source</span>
                         <span class="px-3 py-1 bg-purple-500/20 text-purple-400 text-sm rounded-full">Windows</span>
                         <span class="px-3 py-1 bg-purple-500/20 text-purple-400 text-sm rounded-full">macOS</span>
                         <span class="px-3 py-1 bg-purple-500/20 text-purple-400 text-sm rounded-full">Linux</span>
+                    </div>
+
+                    <!-- GitHub статистика -->
+                    <div class="github-stats mb-6">
+                        <div class="github-stat loading" data-stat="stars">
+                            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <span class="count">--</span>
+                            <span data-i18n="stats.stars">звёзд</span>
+                        </div>
+                        <div class="github-stat loading" data-stat="forks">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                            <span class="count">--</span>
+                            <span data-i18n="stats.forks">форков</span>
+                        </div>
+                        <div class="github-stat loading" data-stat="downloads">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            <span class="count">--</span>
+                            <span data-i18n="stats.downloads">скачиваний</span>
+                        </div>
                     </div>
 
                     <div class="flex flex-wrap gap-4">
@@ -128,7 +144,7 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                             </svg>
-                            Скачать
+                            <span data-i18n="converter.download">Скачать</span>
                         </a>
                         <a href="https://github.com/MuXolotl/MuXolotl-Converter" target="_blank" class="px-6 py-3 border border-gray-700 rounded-lg font-medium hover:bg-gray-800 transition flex items-center gap-2">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -145,7 +161,7 @@
     <!-- Возможности -->
     <section class="py-16 px-6 relative z-10">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold mb-8">Возможности</h2>
+            <h2 class="text-2xl font-bold mb-8" data-i18n="converter.features">Возможности</h2>
             
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6 card-hover">
@@ -154,8 +170,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2">Аудио конвертация</h3>
-                    <p class="text-gray-400 text-sm">Поддержка популярных форматов: MP3, WAV, FLAC, OGG и других</p>
+                    <h3 class="text-lg font-semibold mb-2" data-i18n="converter.audio">Аудио конвертация</h3>
+                    <p class="text-gray-400 text-sm" data-i18n="converter.audio.desc">Поддержка популярных форматов: MP3, WAV, FLAC, OGG и других</p>
                 </div>
 
                 <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6 card-hover">
@@ -164,8 +180,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2">Видео конвертация</h3>
-                    <p class="text-gray-400 text-sm">Конвертируй видео в MP4, AVI, MKV и другие форматы</p>
+                    <h3 class="text-lg font-semibold mb-2" data-i18n="converter.video">Видео конвертация</h3>
+                    <p class="text-gray-400 text-sm" data-i18n="converter.video.desc">Конвертируй видео в MP4, AVI, MKV и другие форматы</p>
                 </div>
 
                 <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6 card-hover">
@@ -174,8 +190,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2">Простой интерфейс</h3>
-                    <p class="text-gray-400 text-sm">Минималистичный дизайн — ничего лишнего</p>
+                    <h3 class="text-lg font-semibold mb-2" data-i18n="converter.ui">Простой интерфейс</h3>
+                    <p class="text-gray-400 text-sm" data-i18n="converter.ui.desc">Минималистичный дизайн — ничего лишнего</p>
                 </div>
 
                 <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6 card-hover">
@@ -185,23 +201,114 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2">Настройки качества</h3>
-                    <p class="text-gray-400 text-sm">Выбирай битрейт и качество выходного файла</p>
+                    <h3 class="text-lg font-semibold mb-2" data-i18n="converter.quality">Настройки качества</h3>
+                    <p class="text-gray-400 text-sm" data-i18n="converter.quality.desc">Выбирай битрейт и качество выходного файла</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Загрузка -->
-    <section id="download" class="py-16 px-6 bg-gray-900/50 relative z-10">
+    <!-- Поддерживаемые форматы -->
+    <section id="formats" class="py-16 px-6 bg-gray-900/50 relative z-10">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold mb-2">Скачать</h2>
-            <p class="text-gray-500 mb-8">Версия 1.0.2 • GPL v2 / LGPL v2.1</p>
+            <h2 class="text-2xl font-bold mb-8" data-i18n="formats.title">Поддерживаемые форматы</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Аудио форматы -->
+                <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold" data-i18n="formats.audio">Аудио</h3>
+                            <span class="text-sm text-gray-500" data-i18n="formats.audio.count">21 формат</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">mp3</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">aac</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">m4a</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">flac</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">wav</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">ogg</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">opus</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">alac</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">m4b</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">wma</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">aiff</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">wv</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">tta</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">ac3</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">dts</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">amr</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">au</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">ra</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">shn</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">mka</span>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-300 text-xs rounded font-mono">spx</span>
+                    </div>
+                </div>
+
+                <!-- Видео форматы -->
+                <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold" data-i18n="formats.video">Видео</h3>
+                            <span class="text-sm text-gray-500" data-i18n="formats.video.count">22 формата</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">mp4</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">mkv</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">webm</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">avi</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">mov</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">gif</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">m4v</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">flv</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">wmv</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">mpg</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">mpeg</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">ts</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">ogv</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">3gp</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">mxf</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">m2ts</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">f4v</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">vob</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">rm</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">divx</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">nut</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">y4m</span>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-300 text-xs rounded font-mono">dv</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-center text-sm text-gray-500 mt-6" data-i18n="formats.note">
+                Конвертация работает на базе FFmpeg — поддерживаются практически все популярные форматы
+            </p>
+        </div>
+    </section>
+
+    <!-- Загрузка -->
+    <section id="download" class="py-16 px-6 relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold mb-2" data-i18n="download.title">Скачать</h2>
+            <p class="text-gray-500 mb-8">v1.0.2 • GPL v2 / LGPL v2.1</p>
             
             <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6">
                 <!-- Выбор ОС -->
                 <div class="mb-6">
-                    <label class="block text-sm text-gray-400 mb-3">Операционная система</label>
+                    <label class="block text-sm text-gray-400 mb-3" data-i18n="download.os">Операционная система</label>
                     <div class="flex flex-wrap gap-2" id="osSelector">
                         <button data-os="windows" class="os-btn px-4 py-2 rounded-lg border border-gray-600 hover:border-blue-500 transition flex items-center gap-2 bg-blue-500/20 border-blue-500 text-white">
                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
@@ -222,20 +329,20 @@
                     </div>
                 </div>
 
-                <!-- Контейнер для вариантов загрузки -->
+                <!-- Варианты загрузки -->
                 <div id="downloadOptions">
                     <!-- Windows -->
                     <div id="download-windows" class="download-panel">
                         <div class="mb-4">
-                            <label class="block text-sm text-gray-400 mb-3">Тип установки</label>
+                            <label class="block text-sm text-gray-400 mb-3" data-i18n="download.type">Тип установки</label>
                             <div class="grid sm:grid-cols-2 gap-3">
                                 <a href="https://github.com/MuXolotl/MuXolotl-Converter/releases/download/v1.0.2/MuXolotl-Converter-1.0.2-windows-x64-setup.msi" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
                                     <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
                                         <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                     </div>
                                     <div class="flex-1">
-                                        <div class="font-medium group-hover:text-blue-400 transition">Установщик (.msi)</div>
-                                        <div class="text-sm text-gray-500">Рекомендуется</div>
+                                        <div class="font-medium group-hover:text-blue-400 transition" data-i18n="download.installer">Установщик (.msi)</div>
+                                        <div class="text-sm text-gray-500" data-i18n="download.recommended">Рекомендуется</div>
                                     </div>
                                 </a>
                                 <a href="https://github.com/MuXolotl/MuXolotl-Converter/releases/download/v1.0.2/MuXolotl-Converter-1.0.2-windows-x64-portable.exe" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
@@ -243,8 +350,8 @@
                                         <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                                     </div>
                                     <div class="flex-1">
-                                        <div class="font-medium group-hover:text-purple-400 transition">Portable (.exe)</div>
-                                        <div class="text-sm text-gray-500">Без установки</div>
+                                        <div class="font-medium group-hover:text-purple-400 transition" data-i18n="download.portable">Portable (.exe)</div>
+                                        <div class="text-sm text-gray-500" data-i18n="download.noinstall">Без установки</div>
                                     </div>
                                 </a>
                             </div>
@@ -253,7 +360,7 @@
                             <span class="text-sm text-gray-500">Windows 10/11 (x64)</span>
                             <a href="https://github.com/MuXolotl/MuXolotl-Converter/releases/download/v1.0.2/ffmpeg-windows-x64.zip" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                FFmpeg бинарники
+                                <span data-i18n="download.ffmpeg">FFmpeg бинарники</span>
                             </a>
                         </div>
                     </div>
@@ -266,8 +373,8 @@
                                     <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 </div>
                                 <div class="flex-1">
-                                    <div class="font-medium group-hover:text-blue-400 transition">Скачать .dmg</div>
-                                    <div class="text-sm text-gray-500">Для Mac с процессором Intel</div>
+                                    <div class="font-medium group-hover:text-blue-400 transition" data-i18n="download.dmg">Скачать .dmg</div>
+                                    <div class="text-sm text-gray-500" data-i18n="download.intel">Для Mac с процессором Intel</div>
                                 </div>
                             </a>
                         </div>
@@ -275,7 +382,7 @@
                             <span class="text-sm text-gray-500">macOS (Intel x64)</span>
                             <a href="https://github.com/MuXolotl/MuXolotl-Converter/releases/download/v1.0.2/ffmpeg-macos-intel.zip" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                FFmpeg бинарники
+                                <span data-i18n="download.ffmpeg">FFmpeg бинарники</span>
                             </a>
                         </div>
                     </div>
@@ -288,8 +395,8 @@
                                     <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 </div>
                                 <div class="flex-1">
-                                    <div class="font-medium group-hover:text-blue-400 transition">Скачать .dmg</div>
-                                    <div class="text-sm text-gray-500">Для Mac M1 / M2 / M3 / M4</div>
+                                    <div class="font-medium group-hover:text-blue-400 transition" data-i18n="download.dmg">Скачать .dmg</div>
+                                    <div class="text-sm text-gray-500" data-i18n="download.silicon">Для Mac M1 / M2 / M3 / M4</div>
                                 </div>
                             </a>
                         </div>
@@ -297,7 +404,7 @@
                             <span class="text-sm text-gray-500">macOS (Apple Silicon)</span>
                             <a href="https://github.com/MuXolotl/MuXolotl-Converter/releases/download/v1.0.2/ffmpeg-macos-arm64.zip" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                FFmpeg бинарники
+                                <span data-i18n="download.ffmpeg">FFmpeg бинарники</span>
                             </a>
                         </div>
                     </div>
@@ -310,8 +417,8 @@
                                     <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 </div>
                                 <div class="flex-1">
-                                    <div class="font-medium group-hover:text-blue-400 transition">Скачать .deb</div>
-                                    <div class="text-sm text-gray-500">Для Debian / Ubuntu</div>
+                                    <div class="font-medium group-hover:text-blue-400 transition" data-i18n="download.deb">Скачать .deb</div>
+                                    <div class="text-sm text-gray-500" data-i18n="download.debian">Для Debian / Ubuntu</div>
                                 </div>
                             </a>
                         </div>
@@ -319,7 +426,7 @@
                             <span class="text-sm text-gray-500">Linux (x64)</span>
                             <a href="https://github.com/MuXolotl/MuXolotl-Converter/releases/download/v1.0.2/ffmpeg-linux-x64.tar.gz" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                FFmpeg бинарники
+                                <span data-i18n="download.ffmpeg">FFmpeg бинарники</span>
                             </a>
                         </div>
                     </div>
@@ -327,7 +434,7 @@
 
                 <!-- Все релизы -->
                 <div class="mt-6 pt-4 border-t border-gray-700 text-center">
-                    <a href="https://github.com/MuXolotl/MuXolotl-Converter/releases" target="_blank" class="text-sm text-gray-400 hover:text-white transition">
+                    <a href="https://github.com/MuXolotl/MuXolotl-Converter/releases" target="_blank" class="text-sm text-gray-400 hover:text-white transition" data-i18n="download.allversions">
                         Все версии на GitHub →
                     </a>
                 </div>
@@ -335,7 +442,7 @@
 
             <!-- Технологии -->
             <div class="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-500">
-                <span>Создано с:</span>
+                <span data-i18n="download.builtwith">Создано с:</span>
                 <span class="px-2 py-1 bg-gray-800/50 rounded">Tauri</span>
                 <span class="px-2 py-1 bg-gray-800/50 rounded">React</span>
                 <span class="px-2 py-1 bg-gray-800/50 rounded">FFmpeg</span>
@@ -347,7 +454,7 @@
     <!-- Участие в разработке -->
     <section class="py-16 px-6 relative z-10">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold mb-8">Участие в разработке</h2>
+            <h2 class="text-2xl font-bold mb-8" data-i18n="contrib.title">Участие в разработке</h2>
             
             <div class="bg-gradient-to-br from-blue-600/10 to-purple-600/10 border border-gray-700/50 rounded-xl p-8">
                 <div class="flex items-start gap-4">
@@ -357,8 +464,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-xl font-semibold mb-3">Проект открыт для контрибьюторов</h3>
-                        <p class="text-gray-400 mb-4">
+                        <h3 class="text-xl font-semibold mb-3" data-i18n="contrib.heading">Проект открыт для контрибьюторов</h3>
+                        <p class="text-gray-400 mb-4" data-i18n="contrib.desc">
                             MuXolotl-Converter — open source проект. Буду рад любой помощи: исправление багов, новые функции, улучшение документации или просто идеи.
                         </p>
                         <div class="flex flex-wrap gap-3">
@@ -366,13 +473,13 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                Сообщить о баге
+                                <span data-i18n="contrib.bug">Сообщить о баге</span>
                             </a>
                             <a href="https://github.com/MuXolotl/MuXolotl-Converter/pulls" target="_blank" class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm hover:bg-gray-700 transition flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
                                 </svg>
-                                Pull Requests
+                                <span data-i18n="contrib.pr">Pull Requests</span>
                             </a>
                         </div>
                     </div>
@@ -390,10 +497,18 @@
                 </div>
                 <span class="text-gray-400">© 2025 MuXolotl</span>
             </div>
-            <a href="index.html" class="text-gray-500 hover:text-gray-300 transition">← Вернуться на главную</a>
+            <a href="index.html" class="text-gray-500 hover:text-gray-300 transition" data-i18n="footer.back">← Вернуться на главную</a>
         </div>
     </footer>
 
+    <!-- Кнопка "Наверх" -->
+    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+
+    <script src="main.js"></script>
     <script>
         // Переключение ОС
         const osButtons = document.querySelectorAll('.os-btn');
@@ -403,7 +518,6 @@
             btn.addEventListener('click', () => {
                 const os = btn.dataset.os;
                 
-                // Обновляем стили кнопок
                 osButtons.forEach(b => {
                     b.classList.remove('bg-blue-500/20', 'border-blue-500', 'text-white');
                     b.classList.add('border-gray-600');
@@ -411,35 +525,27 @@
                 btn.classList.add('bg-blue-500/20', 'border-blue-500', 'text-white');
                 btn.classList.remove('border-gray-600');
                 
-                // Показываем нужную панель
-                downloadPanels.forEach(panel => {
-                    panel.classList.add('hidden');
-                });
+                downloadPanels.forEach(panel => panel.classList.add('hidden'));
                 document.getElementById(`download-${os}`).classList.remove('hidden');
             });
         });
 
-        // Определяем ОС пользователя
+        // Определяем ОС (только для десктопа)
         function detectOS() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            if (userAgent.includes('win')) return 'windows';
-            if (userAgent.includes('mac')) {
-                // Проверяем Apple Silicon через platform (не 100% надёжно, но лучше чем ничего)
-                if (navigator.platform === 'MacIntel') {
-                    return 'macos-intel';
-                }
-                return 'macos-arm';
+            const ua = navigator.userAgent.toLowerCase();
+            if (ua.includes('win')) return 'windows';
+            if (ua.includes('mac')) {
+                return navigator.platform === 'MacIntel' ? 'macos-intel' : 'macos-arm';
             }
-            if (userAgent.includes('linux')) return 'linux';
+            if (ua.includes('linux')) return 'linux';
             return 'windows';
         }
 
-        // Автоматически выбираем ОС при загрузке
-        document.addEventListener('DOMContentLoaded', () => {
-            const detectedOS = detectOS();
-            const btn = document.querySelector(`[data-os="${detectedOS}"]`);
+        // Автовыбор ОС при загрузке (только на десктопе)
+        if (!isMobileDevice()) {
+            const btn = document.querySelector(`[data-os="${detectOS()}"]`);
             if (btn) btn.click();
-        });
+        }
     </script>
 </body>
 </html>
