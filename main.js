@@ -507,6 +507,47 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// ===== Переключатель ОС (страница загрузки) =====
+function initOSSelector() {
+    const osButtons = document.querySelectorAll('.os-btn');
+    const downloadPanels = document.querySelectorAll('.download-panel');
+    
+    if (osButtons.length === 0) return;
+
+    osButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const os = btn.dataset.os;
+            
+            osButtons.forEach(b => {
+                b.classList.remove('bg-blue-500/20', 'border-blue-500', 'text-white');
+                b.classList.add('border-gray-600');
+            });
+            btn.classList.add('bg-blue-500/20', 'border-blue-500', 'text-white');
+            btn.classList.remove('border-gray-600');
+            
+            downloadPanels.forEach(panel => panel.classList.add('hidden'));
+            document.getElementById(`download-${os}`)?.classList.remove('hidden');
+        });
+    });
+
+    // Определяем ОС
+    function detectOS() {
+        const ua = navigator.userAgent.toLowerCase();
+        if (ua.includes('win')) return 'windows';
+        if (ua.includes('mac')) {
+            return navigator.platform === 'MacIntel' ? 'macos-intel' : 'macos-arm';
+        }
+        if (ua.includes('linux')) return 'linux';
+        return 'windows';
+    }
+
+    // Автовыбор ОС при загрузке (только на десктопе)
+    if (!isMobileDevice()) {
+        const btn = document.querySelector(`[data-os="${detectOS()}"]`);
+        if (btn) btn.click();
+    }
+}
+
 // ===== Инициализация =====
 document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
@@ -516,6 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLanguageSwitcher();
     initMobileWarning();
     initShareButtons();
+    initOSSelector();
     
     // Загрузить GitHub статистику если есть элемент
     if (document.querySelector('.github-stats')) {
