@@ -84,7 +84,6 @@
     <!-- Hero секция -->
     <section class="pt-32 pb-20 px-6 relative z-10">
         <div class="max-w-6xl mx-auto text-center">
-            <!-- ЛОГОТИП: <img src="images/logo.png" alt="MuXolotl" class="w-24 h-24 mx-auto mb-8 rounded-2xl shadow-2xl shadow-purple-500/20"> -->
             <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center font-bold text-4xl mx-auto mb-8 shadow-2xl shadow-purple-500/20">
                 M
             </div>
@@ -154,12 +153,21 @@
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- MuXolotl-Converter -->
-                <a href="converter.html" class="bg-gray-800/50 border border-gray-700/50 rounded-xl overflow-hidden card-hover block">
-                    <img src="images/converter-screenshot.png" alt="MuXolotl-Converter" class="h-40 w-full object-cover">
+                <a href="converter.html" class="bg-gray-800/50 border border-gray-700/50 rounded-xl overflow-hidden card-hover block group">
+                    <div class="h-40 w-full overflow-hidden">
+                        <!-- Добавлен onerror и эффект зума при наведении -->
+                        <img 
+                            src="images/converter-screenshot.png" 
+                            alt="MuXolotl-Converter" 
+                            class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                            onerror="handleImageError(this)"
+                        >
+                    </div>
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-3">
                             <h3 class="text-lg font-semibold">MuXolotl-Converter</h3>
-                            <span class="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full font-medium">v1.0.2</span>
+                            <!-- Добавлен class version-tag для авто-обновления -->
+                            <span class="version-tag px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full font-medium">v1.0.2</span>
                         </div>
                         <p class="text-gray-400 text-sm mb-4" data-i18n="software.converter.desc">Конвертер медиафайлов с простым интерфейсом</p>
                         <div class="flex items-center gap-2 flex-wrap">

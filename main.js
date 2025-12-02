@@ -56,6 +56,7 @@ const translations = {
         'converter.ui.desc': 'Минималистичный дизайн — ничего лишнего',
         'converter.quality': 'Настройки качества',
         'converter.quality.desc': 'Выбирай битрейт и качество выходного файла',
+        'converter.img_fail': 'Изображение не загружено',
         
         // Загрузка
         'download.title': 'Скачать',
@@ -83,7 +84,7 @@ const translations = {
         
         // Мобильное предупреждение
         'mobile.title': 'Только для компьютеров',
-        'mobile.desc': 'MuXolotl-Converter — десктопное приложение для Windows, macOS и Linux. На мобильных устройствах оно не работает.',
+        'mobile.desc': 'MuXolotl-Converter — десктопное приложение. На мобильных устройствах оно не работает, но вы можете изучить сайт.',
         'mobile.btn': 'Понятно',
         
         // GitHub статистика
@@ -156,6 +157,7 @@ const translations = {
         'converter.ui.desc': 'Minimalist design — nothing extra',
         'converter.quality': 'Quality Settings',
         'converter.quality.desc': 'Choose bitrate and output file quality',
+        'converter.img_fail': 'Image not found',
         
         // Download
         'download.title': 'Download',
@@ -183,7 +185,7 @@ const translations = {
         
         // Mobile warning
         'mobile.title': 'Desktop Only',
-        'mobile.desc': 'MuXolotl-Converter is a desktop application for Windows, macOS, and Linux. It does not work on mobile devices.',
+        'mobile.desc': 'MuXolotl-Converter is a desktop application. It does not work on mobile devices, but feel free to browse the site.',
         'mobile.btn': 'Got it',
         
         // GitHub stats
@@ -235,6 +237,10 @@ function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
     applyTranslations();
+    // Обновляем текст фолбеков изображений
+    document.querySelectorAll('.img-placeholder span').forEach(span => {
+        span.textContent = t('converter.img_fail');
+    });
 }
 
 // ===== Мобильное меню =====
@@ -310,7 +316,7 @@ function initSmoothScroll() {
     });
 }
 
-// ===== GitHub API статистика с кешированием =====
+// ===== GitHub API и Динамические Ссылки =====
 async function fetchGitHubStats(repo) {
     const CACHE_KEY = `gh_stats_${repo}`;
     const CACHE_EXPIRATION_MS = 60 * 60 * 1000; // 1 час жизни кеша
@@ -318,16 +324,20 @@ async function fetchGitHubStats(repo) {
     try {
         // 1. Проверяем кеш
         const cachedRaw = localStorage.getItem(CACHE_KEY);
+        let releasesData = null;
+        let result = null;
+
         if (cachedRaw) {
-            const { timestamp, data } = JSON.parse(cachedRaw);
-            // Если кеш свежий (меньше 1 часа), возвращаем его
+            const { timestamp, data, releases } = JSON.parse(cachedRaw);
             if (Date.now() - timestamp < CACHE_EXPIRATION_MS) {
                 console.log('Using cached GitHub stats');
+                // Если есть кеш, обновляем ссылки сразу
+                if(releases) updateDownloadLinks(releases);
                 return data;
             }
         }
 
-        // 2. Если кеша нет или он протух — делаем запрос
+        // 2. Запрос
         console.log('Fetching new GitHub stats...');
         const repoResponse = await fetch(`https://api.github.com/repos/${repo}`);
         if (!repoResponse.ok) throw new Error('Repo fetch failed');
@@ -335,44 +345,91 @@ async function fetchGitHubStats(repo) {
         
         const releasesResponse = await fetch(`https://api.github.com/repos/${repo}/releases`);
         if (!releasesResponse.ok) throw new Error('Releases fetch failed');
-        const releasesData = await releasesResponse.json();
+        releasesData = await releasesResponse.json();
         
         let totalDownloads = 0;
         let lastReleaseDate = null;
+        let latestRelease = null;
         
         if (Array.isArray(releasesData) && releasesData.length > 0) {
-            lastReleaseDate = releasesData[0].published_at;
+            latestRelease = releasesData[0]; // Самый свежий релиз
+            lastReleaseDate = latestRelease.published_at;
             releasesData.forEach(release => {
                 release.assets?.forEach(asset => {
                     totalDownloads += asset.download_count;
                 });
             });
+            
+            // Обновляем ссылки на странице
+            updateDownloadLinks(latestRelease);
         }
         
-        const result = {
+        result = {
             stars: repoData.stargazers_count || 0,
             forks: repoData.forks_count || 0,
             downloads: totalDownloads,
-            lastRelease: lastReleaseDate
+            lastRelease: lastReleaseDate,
+            version: latestRelease ? latestRelease.tag_name : 'v1.0.0'
         };
 
         // 3. Сохраняем в кеш
         localStorage.setItem(CACHE_KEY, JSON.stringify({
             timestamp: Date.now(),
-            data: result
+            data: result,
+            releases: latestRelease
         }));
         
         return result;
 
     } catch (error) {
         console.error('Failed to fetch GitHub stats:', error);
-        // Если запрос упал, пробуем вернуть старый кеш, даже если он протух
         const cachedRaw = localStorage.getItem(CACHE_KEY);
         if (cachedRaw) {
-            return JSON.parse(cachedRaw).data;
+            const cache = JSON.parse(cachedRaw);
+            if(cache.releases) updateDownloadLinks(cache.releases);
+            return cache.data;
         }
         return null;
     }
+}
+
+// Функция обновления ссылок на скачивание
+function updateDownloadLinks(release) {
+    if (!release || !release.assets) return;
+
+    // 1. Обновляем текст версии
+    document.querySelectorAll('.version-tag').forEach(el => {
+        el.textContent = release.tag_name;
+    });
+
+    // 2. Находим и обновляем ссылки по data-атрибутам
+    const assets = release.assets;
+    
+    const updateLink = (selector, typeIdentifier) => {
+        const btn = document.querySelector(selector);
+        if (!btn) return;
+        
+        // Ищем подходящий ассет
+        const asset = assets.find(a => a.name.toLowerCase().includes(typeIdentifier));
+        if (asset) {
+            btn.href = asset.browser_download_url;
+        }
+    };
+
+    // Windows
+    updateLink('[data-download="windows-installer"]', '.msi');
+    updateLink('[data-download="windows-portable"]', 'portable.exe');
+    updateLink('[data-download="windows-ffmpeg"]', 'windows-x64.zip');
+
+    // macOS
+    updateLink('[data-download="macos-intel"]', 'macos-intel.dmg');
+    updateLink('[data-download="macos-silicon"]', 'apple-silicon.dmg');
+    updateLink('[data-download="macos-intel-ffmpeg"]', 'macos-intel.zip');
+    updateLink('[data-download="macos-silicon-ffmpeg"]', 'macos-arm64.zip');
+
+    // Linux
+    updateLink('[data-download="linux-deb"]', '.deb');
+    updateLink('[data-download="linux-ffmpeg"]', 'linux-x64.tar.gz');
 }
 
 // Форматирование относительной даты
@@ -453,9 +510,6 @@ function initShareButtons() {
             const platform = btn.dataset.share;
             const url = encodeURIComponent(window.location.href);
             const title = encodeURIComponent(document.title);
-            const text = encodeURIComponent(currentLang === 'ru' 
-                ? 'Конвертер медиафайлов с простым интерфейсом' 
-                : 'Media file converter with a simple interface');
             
             let shareUrl = '';
             
@@ -478,6 +532,34 @@ function initShareButtons() {
     });
 }
 
+// ===== Обработка ошибок изображений (Fallback) =====
+function handleImageError(img) {
+    img.onerror = null; // Предотвращаем бесконечный цикл
+    
+    // Создаем SVG заглушку
+    const placeholder = document.createElement('div');
+    placeholder.className = 'img-placeholder';
+    
+    // Задаем высоту как у родителя или дефолтную
+    const height = img.style.height || (img.parentElement.clientHeight > 0 ? img.parentElement.clientHeight + 'px' : '200px');
+    placeholder.style.height = height;
+
+    placeholder.innerHTML = `
+        <svg class="w-12 h-12 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        <span class="text-sm font-medium">${t('converter.img_fail')}</span>
+    `;
+    
+    // Заменяем картинку на заглушку, сохраняя классы для layout
+    // Если у картинки был onclick (лайтбокс), мы его теряем, что логично для плейсхолдера
+    img.parentNode.replaceChild(placeholder, img);
+}
+
+// Делаем функцию доступной глобально для inline вызова
+window.handleImageError = handleImageError;
+
+
 // ===== Определение мобильного устройства =====
 function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -489,11 +571,15 @@ function initMobileWarning() {
     const closeBtn = document.getElementById('closeMobileWarning');
     
     if (warning && isMobileDevice()) {
-        warning.classList.remove('hidden');
+        // Проверяем, закрывал ли пользователь уже это окно в этой сессии
+        if (!sessionStorage.getItem('mobileWarningClosed')) {
+            warning.classList.remove('hidden');
+        }
         
         if (closeBtn) {
             closeBtn.addEventListener('click', () => {
                 warning.classList.add('hidden');
+                sessionStorage.setItem('mobileWarningClosed', 'true');
             });
         }
     }
@@ -513,6 +599,9 @@ function initLanguageSwitcher() {
 
 // ===== Лайтбокс для изображений =====
 function openLightbox(src) {
+    // Проверяем, не является ли это плейсхолдером (хотя onclick обычно на img)
+    if(src.includes('placeholder')) return;
+
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightboxImg');
     if (lightbox && img) {
@@ -521,6 +610,8 @@ function openLightbox(src) {
         document.body.style.overflow = 'hidden';
     }
 }
+// Глобальный экспорт
+window.openLightbox = openLightbox;
 
 function closeLightbox() {
     const lightbox = document.getElementById('lightbox');
@@ -529,6 +620,7 @@ function closeLightbox() {
         document.body.style.overflow = '';
     }
 }
+window.closeLightbox = closeLightbox;
 
 // Закрытие по Escape
 document.addEventListener('keydown', (e) => {
@@ -564,16 +656,17 @@ function initOSSelector() {
     function detectOS() {
         const ua = navigator.userAgent.toLowerCase();
         if (ua.includes('win')) return 'windows';
-        if (ua.includes('mac')) {
-            return navigator.platform === 'MacIntel' ? 'macos-intel' : 'macos-arm';
-        }
+        // Просто macos, без попытки угадать чип, так как это ненадежно в JS
+        if (ua.includes('mac')) return 'macos-intel'; 
         if (ua.includes('linux')) return 'linux';
         return 'windows';
     }
 
     // Автовыбор ОС при загрузке (только на десктопе)
     if (!isMobileDevice()) {
-        const btn = document.querySelector(`[data-os="${detectOS()}"]`);
+        const detected = detectOS();
+        // Если определили mac, кликаем по интелу по дефолту (наиболее частое пока что), но юзер может сменить
+        const btn = document.querySelector(`[data-os="${detected}"]`);
         if (btn) btn.click();
     }
 }
