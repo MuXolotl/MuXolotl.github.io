@@ -1,9 +1,14 @@
-// ===== MuXolotl - Общий JavaScript =====
+/**
+ * MuXolotl - Main Site Logic
+ * Includes: I18n, GitHub API integration, Carousel, and UI interactions.
+ */
 
-// Тексты для мультиязычности
+// =========================================
+// Internationalization (I18n)
+// =========================================
 const translations = {
     ru: {
-        // Навигация
+        // Navigation
         'nav.about': 'О нас',
         'nav.software': 'Программы',
         'nav.games': 'Игры',
@@ -11,12 +16,12 @@ const translations = {
         'nav.back': 'На главную',
         'nav.back_short': 'Главная',
         
-        // Hero
+        // Hero Section
         'hero.subtitle': 'Разрабатываю программы и игры. Все проекты с открытым исходным кодом.',
         'hero.projects': 'Мои проекты',
         'hero.contact': 'Связаться',
         
-        // О проекте
+        // About Section
         'about.title': 'О проекте',
         'about.software': 'Программы',
         'about.software.desc': 'Утилиты для повседневных задач',
@@ -25,18 +30,21 @@ const translations = {
         'about.opensource': 'Open Source',
         'about.opensource.desc': 'Весь код открыт на GitHub',
         
-        // Программы
+        // Software Section & Cards
         'software.title': 'Программы',
         'software.soon': 'Новые проекты скоро',
         'software.converter.desc': 'Конвертер медиафайлов с простым интерфейсом',
+        'software.colab': 'Google Colab',
+        'software.colab.desc': 'Блокноты Google Colab: тренировка моделей и каверы',
         'software.indev': 'В разработке',
+        'software.open': 'Открыть',
         
-        // Игры
+        // Games Section
         'games.title': 'Игры',
         'games.soon': 'Скоро',
         'games.soon.desc': 'Игровые проекты в процессе разработки',
         
-        // Контакты
+        // Contact Section
         'contact.title': 'Контакты',
         'contact.desc': 'Есть вопросы, идеи или просто хочешь написать? Найди меня на GitHub.',
         
@@ -44,7 +52,7 @@ const translations = {
         'footer.rights': '© 2025 MuXolotl. Все права защищены.',
         'footer.back': '← Вернуться на главную',
         
-        // Converter страница
+        // Converter Page
         'converter.subtitle': 'Конвертер медиафайлов с простым и понятным интерфейсом. Конвертируй аудио и видео в нужный формат.',
         'converter.download': 'Скачать',
         'converter.features': 'Возможности',
@@ -58,7 +66,7 @@ const translations = {
         'converter.quality.desc': 'Выбирай битрейт и качество выходного файла',
         'converter.img_fail': 'Изображение не загружено',
         
-        // Загрузка
+        // Download Section
         'download.title': 'Скачать',
         'download.os': 'Операционная система',
         'download.type': 'Тип установки',
@@ -75,24 +83,24 @@ const translations = {
         'download.allversions': 'Все версии на GitHub →',
         'download.builtwith': 'Создано с:',
         
-        // Участие
+        // Contributing
         'contrib.title': 'Участие в разработке',
         'contrib.heading': 'Проект открыт для контрибьюторов',
         'contrib.desc': 'MuXolotl-Converter — open source проект. Буду рад любой помощи: исправление багов, новые функции, улучшение документации или просто идеи.',
         'contrib.bug': 'Сообщить о баге',
         'contrib.pr': 'Pull Requests',
         
-        // Мобильное предупреждение
+        // Mobile Warning
         'mobile.title': 'Только для компьютеров',
         'mobile.desc': 'MuXolotl-Converter — десктопное приложение. На мобильных устройствах оно не работает, но вы можете изучить сайт.',
         'mobile.btn': 'Понятно',
         
-        // GitHub статистика
+        // Stats
         'stats.stars': 'звёзд',
         'stats.forks': 'форков',
         'stats.downloads': 'скачиваний',
         
-        // Форматы
+        // Formats
         'formats.title': 'Поддерживаемые форматы',
         'formats.audio': 'Аудио',
         'formats.audio.count': '21 формат',
@@ -100,8 +108,28 @@ const translations = {
         'formats.video.count': '22 формата',
         'formats.note': 'Конвертация работает на базе FFmpeg — поддерживаются практически все популярные форматы',
         
-        // Поделиться
-        'share.title': 'Поделиться:'
+        // Share
+        'share.title': 'Поделиться:',
+
+        // Colab Page & Statuses
+        'colab.title': 'Блокноты Google Colab',
+        'colab.subtitle': 'Коллекция скриптов для работы с нейросетями: тренировка RVC моделей, генерация каверов и разделение аудио.',
+        'colab.open': 'Открыть Colab',
+        'colab.backup': 'Резервная ссылка',
+        'colab.train': 'Тренировка моделей',
+        'colab.train.desc': 'Обучение RVC v2 моделей на вашем датасете. Поддержка Tensorboard и сохранения на Drive.',
+        'colab.gen': 'Генерация каверов',
+        'colab.gen.desc': 'Создание AI каверов с использованием предобученных RVC моделей.',
+        'colab.uvr': 'Разделение аудио',
+        'colab.uvr.desc': 'Ultimate Vocal Remover — разделение треков на вокал, инструментал и стемы.',
+        'colab.note': 'Для работы требуется аккаунт Google. Рекомендуется использовать Runtime с GPU.',
+        
+        'status.online': 'Работает',
+        'status.offline': 'Недоступно',
+        'status.online.title': 'Блокнот доступен',
+        'status.online.desc': 'Ссылка работает. Вы можете открыть блокнот в Google Colab и начать работу.',
+        'status.offline.title': 'Блокнот заблокирован',
+        'status.offline.desc': 'Google заблокировал этот блокнот. Пожалуйста, используйте резервную ссылку (Backup Link) или подождите обновления.'
     },
     en: {
         // Navigation
@@ -126,11 +154,14 @@ const translations = {
         'about.opensource': 'Open Source',
         'about.opensource.desc': 'All code is open on GitHub',
         
-        // Software
+        // Software & Cards
         'software.title': 'Software',
         'software.soon': 'New projects coming soon',
         'software.converter.desc': 'Media file converter with a simple interface',
+        'software.colab': 'Google Colab',
+        'software.colab.desc': 'Notebooks Google Colab: model training and covers',
         'software.indev': 'In Development',
+        'software.open': 'Open',
         
         // Games
         'games.title': 'Games',
@@ -145,7 +176,7 @@ const translations = {
         'footer.rights': '© 2025 MuXolotl. All rights reserved.',
         'footer.back': '← Back to home',
         
-        // Converter page
+        // Converter Page
         'converter.subtitle': 'Media file converter with a simple and intuitive interface. Convert audio and video to any format.',
         'converter.download': 'Download',
         'converter.features': 'Features',
@@ -183,12 +214,12 @@ const translations = {
         'contrib.bug': 'Report a bug',
         'contrib.pr': 'Pull Requests',
         
-        // Mobile warning
+        // Mobile Warning
         'mobile.title': 'Desktop Only',
         'mobile.desc': 'MuXolotl-Converter is a desktop application. It does not work on mobile devices, but feel free to browse the site.',
         'mobile.btn': 'Got it',
         
-        // GitHub stats
+        // Stats
         'stats.stars': 'stars',
         'stats.forks': 'forks',
         'stats.downloads': 'downloads',
@@ -202,19 +233,36 @@ const translations = {
         'formats.note': 'Conversion is powered by FFmpeg — almost all popular formats are supported',
         
         // Share
-        'share.title': 'Share:'
+        'share.title': 'Share:',
+
+        // Colab Page & Statuses
+        'colab.title': 'Google Colab Notebooks',
+        'colab.subtitle': 'Collection of scripts for neural networks: RVC model training, AI covers generation and audio separation.',
+        'colab.open': 'Open Colab',
+        'colab.backup': 'Backup Link',
+        'colab.train': 'Model Training',
+        'colab.train.desc': 'Training RVC v2 models on your dataset. Supports Tensorboard and Drive saving.',
+        'colab.gen': 'Cover Generation',
+        'colab.gen.desc': 'Creating AI covers using pre-trained RVC models.',
+        'colab.uvr': 'Audio Separation',
+        'colab.uvr.desc': 'Ultimate Vocal Remover — separate tracks into vocals, instrumental and stems.',
+        'colab.note': 'A Google account is required. Using a Runtime with GPU is recommended.',
+        
+        'status.online': 'Online',
+        'status.offline': 'Blocked',
+        'status.online.title': 'Notebook Available',
+        'status.online.desc': 'The link is working. You can open the notebook in Google Colab and start working.',
+        'status.offline.title': 'Notebook Blocked',
+        'status.offline.desc': 'Google has blocked this notebook. Please use the Backup Link or wait for an update.'
     }
 };
 
-// Текущий язык (по умолчанию из localStorage или браузера)
 let currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('ru') ? 'ru' : 'en');
 
-// Получить перевод
 function t(key) {
     return translations[currentLang][key] || translations['en'][key] || key;
 }
 
-// Применить переводы к странице
 function applyTranslations() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -226,24 +274,50 @@ function applyTranslations() {
         el.placeholder = t(key);
     });
     
-    // Обновить активную кнопку языка
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === currentLang);
     });
+
+    // Update Colab statuses text
+    document.querySelectorAll('.status-text').forEach(el => {
+        const status = el.getAttribute('data-status-key');
+        if(status) el.textContent = t(status);
+    });
+    
+    // Update modal text if open
+    const modal = document.getElementById('statusModal');
+    if (modal && modal.classList.contains('active')) {
+        const isOnline = modal.querySelector('.status-modal-icon').classList.contains('online');
+        const titleKey = isOnline ? 'status.online.title' : 'status.offline.title';
+        const descKey = isOnline ? 'status.online.desc' : 'status.offline.desc';
+        modal.querySelector('h3').textContent = t(titleKey);
+        modal.querySelector('p').textContent = t(descKey);
+    }
 }
 
-// Переключить язык
 function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
     applyTranslations();
-    // Обновляем текст фолбеков изображений
+    
+    // Update image placeholders
     document.querySelectorAll('.img-placeholder span').forEach(span => {
         span.textContent = t('converter.img_fail');
     });
 }
 
-// ===== Мобильное меню =====
+function initLanguageSwitcher() {
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            setLanguage(btn.dataset.lang);
+        });
+    });
+    applyTranslations();
+}
+
+// =========================================
+// UI: Mobile & Navigation
+// =========================================
 function initMobileMenu() {
     const btn = document.getElementById('mobileMenuBtn');
     const menu = document.getElementById('mobileMenu');
@@ -261,7 +335,6 @@ function initMobileMenu() {
     }
 }
 
-// ===== Кнопка "Наверх" =====
 function initScrollTopButton() {
     const btn = document.getElementById('scrollTopBtn');
     if (!btn) return;
@@ -279,7 +352,6 @@ function initScrollTopButton() {
     });
 }
 
-// ===== Анимация появления секций =====
 function initScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
@@ -303,7 +375,6 @@ function initScrollAnimations() {
     });
 }
 
-// ===== Плавный скролл =====
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -316,13 +387,14 @@ function initSmoothScroll() {
     });
 }
 
-// ===== GitHub API и Динамические Ссылки =====
+// =========================================
+// GitHub API & Dynamic Links
+// =========================================
 async function fetchGitHubStats(repo) {
     const CACHE_KEY = `gh_stats_${repo}`;
-    const CACHE_EXPIRATION_MS = 60 * 60 * 1000; // 1 час жизни кеша
+    const CACHE_EXPIRATION_MS = 60 * 60 * 1000; // 1 hour
 
     try {
-        // 1. Проверяем кеш
         const cachedRaw = localStorage.getItem(CACHE_KEY);
         let releasesData = null;
         let result = null;
@@ -330,15 +402,11 @@ async function fetchGitHubStats(repo) {
         if (cachedRaw) {
             const { timestamp, data, releases } = JSON.parse(cachedRaw);
             if (Date.now() - timestamp < CACHE_EXPIRATION_MS) {
-                console.log('Using cached GitHub stats');
-                // Если есть кеш, обновляем ссылки сразу
                 if(releases) updateDownloadLinks(releases);
                 return data;
             }
         }
 
-        // 2. Запрос
-        console.log('Fetching new GitHub stats...');
         const repoResponse = await fetch(`https://api.github.com/repos/${repo}`);
         if (!repoResponse.ok) throw new Error('Repo fetch failed');
         const repoData = await repoResponse.json();
@@ -352,7 +420,7 @@ async function fetchGitHubStats(repo) {
         let latestRelease = null;
         
         if (Array.isArray(releasesData) && releasesData.length > 0) {
-            latestRelease = releasesData[0]; // Самый свежий релиз
+            latestRelease = releasesData[0]; 
             lastReleaseDate = latestRelease.published_at;
             releasesData.forEach(release => {
                 release.assets?.forEach(asset => {
@@ -360,7 +428,6 @@ async function fetchGitHubStats(repo) {
                 });
             });
             
-            // Обновляем ссылки на странице
             updateDownloadLinks(latestRelease);
         }
         
@@ -372,7 +439,6 @@ async function fetchGitHubStats(repo) {
             version: latestRelease ? latestRelease.tag_name : 'v1.0.0'
         };
 
-        // 3. Сохраняем в кеш
         localStorage.setItem(CACHE_KEY, JSON.stringify({
             timestamp: Date.now(),
             data: result,
@@ -393,49 +459,35 @@ async function fetchGitHubStats(repo) {
     }
 }
 
-// Функция обновления ссылок на скачивание
 function updateDownloadLinks(release) {
     if (!release || !release.assets) return;
 
-    // 1. Обновляем текст версии
     document.querySelectorAll('.version-tag').forEach(el => {
         el.textContent = release.tag_name;
     });
 
-    // 2. Находим и обновляем ссылки по data-атрибутам
     const assets = release.assets;
-    
     const updateLink = (selector, typeIdentifier) => {
         const btn = document.querySelector(selector);
         if (!btn) return;
-        
-        // Ищем подходящий ассет
         const asset = assets.find(a => a.name.toLowerCase().includes(typeIdentifier));
-        if (asset) {
-            btn.href = asset.browser_download_url;
-        }
+        if (asset) btn.href = asset.browser_download_url;
     };
 
-    // Windows
+    // TODO: Refactor this mapping if more assets appear
     updateLink('[data-download="windows-installer"]', '.msi');
     updateLink('[data-download="windows-portable"]', 'portable.exe');
     updateLink('[data-download="windows-ffmpeg"]', 'windows-x64.zip');
-
-    // macOS
     updateLink('[data-download="macos-intel"]', 'macos-intel.dmg');
     updateLink('[data-download="macos-silicon"]', 'apple-silicon.dmg');
     updateLink('[data-download="macos-intel-ffmpeg"]', 'macos-intel.zip');
     updateLink('[data-download="macos-silicon-ffmpeg"]', 'macos-arm64.zip');
-
-    // Linux
     updateLink('[data-download="linux-deb"]', '.deb');
     updateLink('[data-download="linux-ffmpeg"]', 'linux-x64.tar.gz');
 }
 
-// Форматирование относительной даты
 function formatRelativeDate(dateString) {
     if (!dateString) return null;
-    
     const date = new Date(dateString);
     const now = new Date();
     const diffMs = now - date;
@@ -465,7 +517,6 @@ function formatRelativeDate(dateString) {
     }
 }
 
-// Склонение слов (для русского)
 function pluralize(n, one, few, many) {
     if (n % 10 === 1 && n % 100 !== 11) return one;
     if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return few;
@@ -500,7 +551,9 @@ function updateGitHubStatsUI(stats) {
     }
 }
 
-// ===== Кнопки "Поделиться" =====
+// =========================================
+// UI Components: Share, Lightbox, OS
+// =========================================
 function initShareButtons() {
     const shareButtons = document.querySelectorAll('[data-share]');
     
@@ -532,15 +585,12 @@ function initShareButtons() {
     });
 }
 
-// ===== Обработка ошибок изображений (Fallback) =====
 function handleImageError(img) {
-    img.onerror = null; // Предотвращаем бесконечный цикл
+    img.onerror = null; 
     
-    // Создаем SVG заглушку
     const placeholder = document.createElement('div');
     placeholder.className = 'img-placeholder';
     
-    // Задаем высоту как у родителя или дефолтную
     const height = img.style.height || (img.parentElement.clientHeight > 0 ? img.parentElement.clientHeight + 'px' : '200px');
     placeholder.style.height = height;
 
@@ -551,27 +601,19 @@ function handleImageError(img) {
         <span class="text-sm font-medium">${t('converter.img_fail')}</span>
     `;
     
-    // Заменяем картинку на заглушку, сохраняя классы для layout
-    // Если у картинки был onclick (лайтбокс), мы его теряем, что логично для плейсхолдера
     img.parentNode.replaceChild(placeholder, img);
 }
-
-// Делаем функцию доступной глобально для inline вызова
 window.handleImageError = handleImageError;
 
-
-// ===== Определение мобильного устройства =====
 function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
-// ===== Предупреждение для мобильных =====
 function initMobileWarning() {
     const warning = document.getElementById('mobileWarning');
     const closeBtn = document.getElementById('closeMobileWarning');
     
     if (warning && isMobileDevice()) {
-        // Проверяем, закрывал ли пользователь уже это окно в этой сессии
         if (!sessionStorage.getItem('mobileWarningClosed')) {
             warning.classList.remove('hidden');
         }
@@ -585,21 +627,7 @@ function initMobileWarning() {
     }
 }
 
-// ===== Переключатель языка =====
-function initLanguageSwitcher() {
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            setLanguage(btn.dataset.lang);
-        });
-    });
-    
-    // Применить переводы при загрузке
-    applyTranslations();
-}
-
-// ===== Лайтбокс для изображений =====
 function openLightbox(src) {
-    // Проверяем, не является ли это плейсхолдером (хотя onclick обычно на img)
     if(src.includes('placeholder')) return;
 
     const lightbox = document.getElementById('lightbox');
@@ -610,7 +638,6 @@ function openLightbox(src) {
         document.body.style.overflow = 'hidden';
     }
 }
-// Глобальный экспорт
 window.openLightbox = openLightbox;
 
 function closeLightbox() {
@@ -622,14 +649,14 @@ function closeLightbox() {
 }
 window.closeLightbox = closeLightbox;
 
-// Закрытие по Escape
+// Global Escape handler
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeLightbox();
+        closeStatusModal();
     }
 });
 
-// ===== Переключатель ОС (страница загрузки) =====
 function initOSSelector() {
     const osButtons = document.querySelectorAll('.os-btn');
     const downloadPanels = document.querySelectorAll('.download-panel');
@@ -652,26 +679,109 @@ function initOSSelector() {
         });
     });
 
-    // Определяем ОС
     function detectOS() {
         const ua = navigator.userAgent.toLowerCase();
         if (ua.includes('win')) return 'windows';
-        // Просто macos, без попытки угадать чип, так как это ненадежно в JS
         if (ua.includes('mac')) return 'macos-intel'; 
         if (ua.includes('linux')) return 'linux';
         return 'windows';
     }
 
-    // Автовыбор ОС при загрузке (только на десктопе)
     if (!isMobileDevice()) {
         const detected = detectOS();
-        // Если определили mac, кликаем по интелу по дефолту (наиболее частое пока что), но юзер может сменить
         const btn = document.querySelector(`[data-os="${detected}"]`);
         if (btn) btn.click();
     }
 }
 
-// ===== Инициализация =====
+function initCarousel() {
+    const track = document.querySelector('.carousel-track');
+    const btnPrev = document.querySelector('.carousel-btn.prev');
+    const btnNext = document.querySelector('.carousel-btn.next');
+
+    if (!track || !btnPrev || !btnNext) return;
+
+    const scrollAmount = () => {
+        const itemWidth = track.children[0].offsetWidth;
+        const gap = 24; // 1.5rem
+        return itemWidth + gap;
+    };
+
+    btnNext.addEventListener('click', () => {
+        track.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+    });
+
+    btnPrev.addEventListener('click', () => {
+        track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+    });
+}
+
+// =========================================
+// Colab Status Modal
+// =========================================
+function openStatusModal(element) {
+    const modal = document.getElementById('statusModal');
+    const icon = modal.querySelector('.status-modal-icon');
+    const title = modal.querySelector('h3');
+    const desc = modal.querySelector('p');
+    
+    const isOnline = element.classList.contains('online');
+    
+    icon.className = `status-modal-icon ${isOnline ? 'online' : 'offline'}`;
+    icon.innerHTML = isOnline 
+        ? '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>'
+        : '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+    
+    title.textContent = t(isOnline ? 'status.online.title' : 'status.offline.title');
+    desc.textContent = t(isOnline ? 'status.online.desc' : 'status.offline.desc');
+    
+    modal.classList.add('active');
+}
+window.openStatusModal = openStatusModal;
+
+function closeStatusModal() {
+    const modal = document.getElementById('statusModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+window.closeStatusModal = closeStatusModal;
+
+// =========================================
+// Colab Status Loader
+// =========================================
+async function initColabStatus() {
+    const statusElements = document.querySelectorAll('.status-badge');
+    if (statusElements.length === 0) return;
+
+    try {
+        const response = await fetch('colab-status.json');
+        if (!response.ok) return; 
+
+        const statuses = await response.json();
+        
+        Object.keys(statuses).forEach(key => {
+            const element = document.getElementById(`status-${key}`);
+            if (element) {
+                const isOnline = statuses[key] === 'online';
+                element.className = `status-badge ${isOnline ? 'online' : 'offline'}`;
+                
+                const textSpan = element.querySelector('.status-text');
+                if(textSpan) {
+                    const statusKey = isOnline ? 'status.online' : 'status.offline';
+                    textSpan.setAttribute('data-status-key', statusKey);
+                    textSpan.textContent = t(statusKey);
+                }
+            }
+        });
+    } catch (e) {
+        console.log('Colab status check skipped or failed');
+    }
+}
+
+// =========================================
+// Initialization
+// =========================================
 document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initScrollTopButton();
@@ -681,9 +791,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileWarning();
     initShareButtons();
     initOSSelector();
+    initCarousel();
+    initColabStatus();
     
-    // Загрузить GitHub статистику если есть элемент
-    if (document.querySelector('.github-stats')) {
+    if (document.querySelector('[data-stat="stars"]')) {
         fetchGitHubStats('MuXolotl/MuXolotl-Converter').then(updateGitHubStatsUI);
     }
 });

@@ -6,15 +6,15 @@
     <title>MuXolotl — Программы и игры</title>
     
     <!-- SEO -->
-    <meta name="description" content="MuXolotl — open source программы и игры. Конвертер медиафайлов и другие проекты.">
-    <meta name="keywords" content="MuXolotl, конвертер, converter, open source, программы, игры, FFmpeg">
+    <meta name="description" content="MuXolotl — open source программы, Google Colab блокноты и игры.">
+    <meta name="keywords" content="MuXolotl, конвертер, colab, RVC, AI covers, open source, программы, игры">
     <meta name="author" content="MuXolotl">
     
-    <!-- Open Graph (Facebook, Telegram, Discord) -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://muxolotl.github.io/">
     <meta property="og:title" content="MuXolotl — Программы и игры">
-    <meta property="og:description" content="Open source программы и игры. Конвертер медиафайлов и другие проекты.">
+    <meta property="og:description" content="Open source программы и игры. Конвертер медиафайлов, Google Colab блокноты и другие проекты.">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -42,7 +42,6 @@
         <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="#" class="flex items-center gap-3">
-                    <!-- ЛОГОТИП: <img src="images/logo.png" alt="MuXolotl" class="w-10 h-10 rounded-lg"> -->
                     <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center font-bold text-lg">
                         M
                     </div>
@@ -145,60 +144,99 @@
         </div>
     </section>
 
-    <!-- Программы -->
+    <!-- Программы (КАРУСЕЛЬ) -->
     <section id="software" class="py-20 px-6 relative z-10">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl font-bold text-center mb-4" data-i18n="software.title">Программы</h2>
             <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- MuXolotl-Converter -->
-                <a href="converter.html" class="bg-gray-800/50 border border-gray-700/50 rounded-xl overflow-hidden card-hover block group">
-                    <div class="h-40 w-full overflow-hidden">
-                        <!-- Добавлен onerror и эффект зума при наведении -->
-                        <img 
-                            src="images/converter-screenshot.png" 
-                            alt="MuXolotl-Converter" 
-                            class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                            onerror="handleImageError(this)"
-                        >
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-lg font-semibold">MuXolotl-Converter</h3>
-                            <!-- Добавлен class version-tag для авто-обновления -->
-                            <span class="version-tag px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full font-medium">v1.0.2</span>
-                        </div>
-                        <p class="text-gray-400 text-sm mb-4" data-i18n="software.converter.desc">Конвертер медиафайлов с простым интерфейсом</p>
-                        <div class="flex items-center gap-2 flex-wrap">
-                            <span class="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded" data-i18n="software.indev">В разработке</span>
-                            <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Open Source</span>
-                        </div>
-                        
-                        <!-- GitHub статистика -->
-                        <div class="github-stats mt-4 pt-4 border-t border-gray-700/50">
-                            <div class="github-stat loading" data-stat="stars">
-                                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <span class="count">--</span>
-                            </div>
-                            <div class="github-stat loading" data-stat="forks">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
-                                <span class="count">--</span>
-                            </div>
-                            <div class="github-stat loading" data-stat="downloads">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                <span class="count">--</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Placeholder -->
-                <div class="bg-gray-800/30 border border-dashed border-gray-700/50 rounded-xl p-6 flex flex-col items-center justify-center min-h-[280px] text-center">
-                    <svg class="w-12 h-12 text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            <!-- Обертка карусели -->
+            <div class="carousel-wrapper group/carousel">
+                <!-- Кнопки навигации -->
+                <button class="carousel-btn prev" aria-label="Previous">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
-                    <p class="text-gray-500" data-i18n="software.soon">Новые проекты скоро</p>
+                </button>
+                <button class="carousel-btn next" aria-label="Next">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+
+                <!-- Трек с карточками -->
+                <div class="carousel-track">
+                    
+                    <!-- ITEM 1: Google Colab -->
+                    <div class="carousel-item">
+                        <a href="colab.html" class="bg-gray-800/50 border border-gray-700/50 rounded-xl overflow-hidden card-hover block h-full flex flex-col">
+                            <div class="h-40 w-full bg-gradient-to-br from-orange-900/20 to-yellow-900/20 flex items-center justify-center relative overflow-hidden">
+                                <!-- Декоративный фон -->
+                                <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 2px 2px, rgba(251, 146, 60, 0.5) 1px, transparent 0); background-size: 20px 20px;"></div>
+                                <svg class="w-16 h-16 text-orange-500 shadow-lg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M15.71 16.71c-1.12.29-2.75.24-4.05-.34-.32-.15-.36-.18-.74-.18-1.75 0-3.44 1.15-4.18 2.86-.75 1.73-.29 3.73 1.15 5.04 1.43 1.31 3.58 1.39 5.11.21 1.54-1.2 2.34-3.19 2.03-5.08-.15-.95-.67-2.26-1.32-2.51zm-2.2 5.23c-.64.5-1.59.45-2.2-.09-.61-.54-.78-1.46-.38-2.15.39-.68 1.24-1.05 2.01-.86.78.18 1.35.88 1.37 1.68.01.8-.35 1.42-.8 1.42zm3.23-8.57c-.89-.57-2.29-.77-3.52-.51-.31.07-.38.05-.72.05-1.83 0-3.68 1.08-4.59 2.87-.91 1.8-1.08 3.96-.41 6.12.67 2.16 2.44 3.73 4.72 4.19 2.28.45 4.72-.41 6.1-2.15.67-.85 1.57-2.53 1.59-3.48.04-1.89-1.18-3.79-3.17-5.09z"/>
+                                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-2a8 8 0 110-16 8 8 0 010 16z" fill-opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="text-lg font-semibold" data-i18n="software.colab">Google Colab</h3>
+                                </div>
+                                <p class="text-gray-400 text-sm mb-4 flex-1" data-i18n="software.colab.desc">Блокноты Google Colab: тренировка моделей и каверы</p>
+                                <div class="flex items-center gap-2 flex-wrap mt-auto">
+                                    <span class="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded" data-i18n="software.open">Открыть</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- ITEM 2: MuXolotl-Converter -->
+                    <div class="carousel-item">
+                        <a href="converter.html" class="bg-gray-800/50 border border-gray-700/50 rounded-xl overflow-hidden card-hover block h-full flex flex-col group">
+                            <div class="h-40 w-full overflow-hidden">
+                                <img 
+                                    src="images/converter-screenshot.png" 
+                                    alt="MuXolotl-Converter" 
+                                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                    onerror="handleImageError(this)"
+                                >
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="text-lg font-semibold">MuXolotl-Converter</h3>
+                                    <span class="version-tag px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full font-medium">v1.0.2</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mb-4 flex-1" data-i18n="software.converter.desc">Конвертер медиафайлов с простым интерфейсом</p>
+                                <div class="flex items-center gap-2 flex-wrap mt-auto">
+                                    <span class="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded" data-i18n="software.indev">В разработке</span>
+                                    <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Open Source</span>
+                                </div>
+                                
+                                <!-- GitHub статистика -->
+                                <div class="github-stats mt-4 pt-4 border-t border-gray-700/50">
+                                    <div class="github-stat loading" data-stat="stars">
+                                        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                        <span class="count">--</span>
+                                    </div>
+                                    <div class="github-stat loading" data-stat="downloads">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        <span class="count">--</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- ITEM 3: Placeholder -->
+                    <div class="carousel-item">
+                        <div class="bg-gray-800/30 border border-dashed border-gray-700/50 rounded-xl p-6 flex flex-col items-center justify-center h-full text-center min-h-[300px]">
+                            <svg class="w-12 h-12 text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                            <p class="text-gray-500" data-i18n="software.soon">Новые проекты скоро</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
