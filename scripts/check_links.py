@@ -1,42 +1,48 @@
 import requests
 import json
-import os
 
-# Список ваших блокнотов
-# Ключи (poltrain, polgen) должны совпадать с ID в colab.html (status-poltrain)
 NOTEBOOKS = {
-    "poltrain": "https://colab.research.google.com/drive/1BiFIyPUdx0u5CWF3YzwKwjgCs_muk6KJ",
-    "polgen": "https://colab.research.google.com/drive/1W39tbdYxR1NSVNHG6EDRiKkY4JM0f60B",
-    "poluvr": "https://colab.research.google.com/drive/1jS3rYTeNBeLgjJiSG12HdzH8d1kbkFLj"
+    "poltrain": "https://drive.google.com/file/d/1BiFIyPUdx0u5CWF3YzwKwjgCs_muk6KJ/view",
+    "polgen": "https://drive.google.com/file/d/1W39tbdYxR1NSVNHG6EDRiKkY4JM0f60B/view",
+    "poluvr": "https://drive.google.com/file/d/1jS3rYTeNBeLgjJiSG12HdzH8d1kbkFLj/view"
 }
 
 def check_status():
     results = {}
     
+    session = requests.Session()
+    session.headers.update({
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0',
+        'Accept-Language': 'en-US,en;q=0.9',
+    })
+    
     for name, url in NOTEBOOKS.items():
         try:
-            # Google Drive ссылки иногда хитрые, но базовый чек на 200/404 работает
-            response = requests.get(url, timeout=10)
+            response = session.get(url, timeout=15)
+            content = response.text.lower()
             
-            # Если статус 200 - ссылка жива. 
-            # Если 404 или ошибка доступа - вероятно, бан или удаление.
-            if response.status_code == 200:
-                # Доп. проверка: иногда Google возвращает 200, но пишет "Файл не существует" в HTML
-                if "Sorry, the file you have requested does not exist" in response.text:
-                    results[name] = "offline"
-                    print(f"❌ {name}: File not found (Content check)")
-                else:
-                    results[name] = "online"
-                    print(f"✅ {name}: OK")
-            else:
+            if response.status_code != 200:
                 results[name] = "offline"
-                print(f"❌ {name}: Status {response.status_code}")
+                print(f"❌ {name}: HTTP {response.status_code}")
+                continue
+            
+            is_blocked = False
+            for pattern in ["in violation of our terms of service"]:
+                if pattern in content:
+                    is_blocked = True
+                    print(f"🚫 {name}: BLOCKED")
+                    break
+            
+            if is_blocked:
+                results[name] = "offline"
+            else:
+                results[name] = "online"
+                print(f"✅ {name}: OK")
                 
         except Exception as e:
-            print(f"⚠️ {name}: Error {e}")
             results[name] = "offline"
+            print(f"⚠️ {name}: ERROR - {e}")
 
-    # Сохраняем результат в JSON
     with open('colab-status.json', 'w') as f:
         json.dump(results, f, indent=4)
 
