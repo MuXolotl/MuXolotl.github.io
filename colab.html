@@ -21,13 +21,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen overflow-x-hidden">
-    <!-- Фоны -->
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div class="blob blob-1"></div>
         <div class="blob blob-3"></div>
     </div>
 
-    <!-- Навигация -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
@@ -35,21 +33,14 @@
                     <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center font-bold text-lg">M</div>
                     <span class="text-xl font-semibold">MuXolotl</span>
                 </a>
-                <div class="flex items-center gap-4">
-                    <div class="lang-switcher">
-                        <button class="lang-btn active" data-lang="ru">RU</button>
-                        <button class="lang-btn" data-lang="en">EN</button>
-                    </div>
-                    <a href="index.html" class="text-gray-300 hover:text-white transition flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                        <span data-i18n="nav.back">На главную</span>
-                    </a>
-                </div>
+                <a href="index.html" class="text-gray-300 hover:text-white transition flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                    <span>На главную</span>
+                </a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero -->
     <section class="pt-32 pb-16 px-6 relative z-10">
         <div class="max-w-4xl mx-auto text-center">
             <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-orange-500/20">
@@ -57,14 +48,13 @@
                     <path d="M18.36 5.64c-1.95-1.96-5.11-1.96-7.07 0L9.88 7.05 8.46 5.64l1.42-1.42c2.73-2.73 7.16-2.73 9.9 0 2.73 2.74 2.73 7.17 0 9.9l-1.42 1.42-1.41-1.42 1.41-1.41c1.96-1.96 1.96-5.12 0-7.07zm-2.12 3.53l-7.07 7.07-1.41-1.41 7.07-7.07 1.41 1.41zm-12.02.71l1.42-1.42 1.41 1.42-1.41 1.41c-1.96 1.96-1.96 5.12 0 7.07 1.95 1.96 5.11 1.96 7.07 0l1.41-1.41 1.42 1.41-1.42 1.42c-2.73 2.73-7.16 2.73-9.9 0-2.73-2.74-2.73-7.17 0-9.9z"/>
                 </svg>
             </div>
-            <h1 class="text-4xl md:text-5xl font-bold mb-6" data-i18n="colab.title">Блокноты Google Colab</h1>
-            <p class="text-xl text-gray-400 leading-relaxed" data-i18n="colab.subtitle">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Блокноты Google Colab</h1>
+            <p class="text-xl text-gray-400 leading-relaxed">
                 Коллекция скриптов для работы с нейросетями: тренировка RVC моделей, генерация каверов и разделение аудио.
             </p>
         </div>
     </section>
 
-    <!-- Список Блокнотов -->
     <section class="py-16 px-6 relative z-10">
         <div class="max-w-6xl mx-auto">
             <div class="grid md:grid-cols-3 gap-6">
@@ -75,24 +65,23 @@
                         <div class="colab-icon-wrapper icon-orange mb-0">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         </div>
-                        <!-- Добавлен onclick -->
                         <div id="status-poltrain" class="status-badge online" onclick="openStatusModal(this)">
                             <span class="status-dot"></span>
-                            <span class="status-text" data-status-key="status.online">Работает</span>
+                            <span class="status-text">Работает</span>
                         </div>
                     </div>
                     <h3 class="text-xl font-bold mb-2">PolTrain</h3>
-                    <h4 class="text-sm text-orange-400 font-medium mb-4" data-i18n="colab.train">Тренировка моделей</h4>
-                    <p class="text-gray-400 text-sm mb-6 flex-1" data-i18n="colab.train.desc">
+                    <h4 class="text-sm text-orange-400 font-medium mb-4">Тренировка моделей</h4>
+                    <p class="text-gray-400 text-sm mb-6 flex-1">
                         Обучение RVC v2 моделей на вашем датасете. Поддержка Tensorboard и сохранения на Drive.
                     </p>
                     <div class="flex flex-col gap-3">
                         <a href="https://colab.research.google.com/drive/1BiFIyPUdx0u5CWF3YzwKwjgCs_muk6KJ" target="_blank" class="colab-btn colab-btn-primary">
-                            <span data-i18n="colab.open">Открыть Colab</span>
+                            <span>Открыть Colab</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                         </a>
                         <a href="https://colab.research.google.com/github/Politrees/PolTrain/blob/PolTrain/PolTrain_Colab.ipynb" target="_blank" class="colab-btn colab-btn-secondary">
-                            <span data-i18n="colab.backup">Резервная ссылка</span>
+                            <span>Резервная ссылка</span>
                         </a>
                         <div class="pt-3 border-t border-gray-700/30">
                             <a href="https://github.com/Politrees/PolTrain" target="_blank" class="text-xs text-gray-500 hover:text-white flex items-center gap-1 transition">
@@ -109,20 +98,19 @@
                         <div class="colab-icon-wrapper icon-pink mb-0">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
                         </div>
-                        <!-- Добавлен onclick -->
                         <div id="status-polgen" class="status-badge online" onclick="openStatusModal(this)">
                             <span class="status-dot"></span>
-                            <span class="status-text" data-status-key="status.online">Работает</span>
+                            <span class="status-text">Работает</span>
                         </div>
                     </div>
                     <h3 class="text-xl font-bold mb-2">PolGen</h3>
-                    <h4 class="text-sm text-pink-400 font-medium mb-4" data-i18n="colab.gen">Генерация каверов</h4>
-                    <p class="text-gray-400 text-sm mb-6 flex-1" data-i18n="colab.gen.desc">
+                    <h4 class="text-sm text-pink-400 font-medium mb-4">Генерация каверов</h4>
+                    <p class="text-gray-400 text-sm mb-6 flex-1">
                         Создание AI каверов с использованием предобученных RVC моделей.
                     </p>
                     <div class="flex flex-col gap-3">
                         <a href="https://colab.research.google.com/drive/1W39tbdYxR1NSVNHG6EDRiKkY4JM0f60B" target="_blank" class="colab-btn colab-btn-primary">
-                            <span data-i18n="colab.open">Открыть Colab</span>
+                            <span>Открыть Colab</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                         </a>
                         <div class="pt-3 border-t border-gray-700/30">
@@ -140,20 +128,19 @@
                         <div class="colab-icon-wrapper icon-cyan mb-0">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
                         </div>
-                        <!-- Добавлен onclick -->
                         <div id="status-poluvr" class="status-badge online" onclick="openStatusModal(this)">
                             <span class="status-dot"></span>
-                            <span class="status-text" data-status-key="status.online">Работает</span>
+                            <span class="status-text">Работает</span>
                         </div>
                     </div>
                     <h3 class="text-xl font-bold mb-2">PolUVR</h3>
-                    <h4 class="text-sm text-cyan-400 font-medium mb-4" data-i18n="colab.uvr">Разделение аудио</h4>
-                    <p class="text-gray-400 text-sm mb-6 flex-1" data-i18n="colab.uvr.desc">
+                    <h4 class="text-sm text-cyan-400 font-medium mb-4">Разделение аудио</h4>
+                    <p class="text-gray-400 text-sm mb-6 flex-1">
                         Ultimate Vocal Remover — разделение треков на вокал, инструментал и стемы.
                     </p>
                     <div class="flex flex-col gap-3">
                         <a href="https://colab.research.google.com/drive/1jS3rYTeNBeLgjJiSG12HdzH8d1kbkFLj" target="_blank" class="colab-btn colab-btn-primary">
-                            <span data-i18n="colab.open">Открыть Colab</span>
+                            <span>Открыть Colab</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                         </a>
                         <div class="pt-3 border-t border-gray-700/30">
@@ -166,20 +153,19 @@
                 </div>
 
             </div>
-            <p class="text-center text-sm text-gray-500 mt-8" data-i18n="colab.note">
+            <p class="text-center text-sm text-gray-500 mt-8">
                 Для работы требуется аккаунт Google. Рекомендуется использовать Runtime с GPU.
             </p>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="py-8 px-6 border-t border-gray-800">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center font-bold text-sm">M</div>
-                <span class="text-gray-400" data-i18n="footer.rights">© 2025 MuXolotl. Все права защищены.</span>
+                <span class="text-gray-400">© 2026 MuXolotl. Все права защищены.</span>
             </div>
-            <a href="index.html" class="text-gray-500 hover:text-gray-300 transition" data-i18n="footer.back">← Вернуться на главную</a>
+            <a href="index.html" class="text-gray-500 hover:text-gray-300 transition">← Вернуться на главную</a>
         </div>
     </footer>
 
@@ -189,9 +175,7 @@
             <button class="status-modal-close" onclick="closeStatusModal()">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
-            <div class="status-modal-icon">
-                <!-- Icon injected by JS -->
-            </div>
+            <div class="status-modal-icon"></div>
             <h3 class="text-xl font-bold mb-2 text-gray-100">Заголовок</h3>
             <p class="text-gray-400 text-sm leading-relaxed">Описание</p>
         </div>

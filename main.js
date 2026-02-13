@@ -1,319 +1,7 @@
 /**
  * MuXolotl - Main Site Logic
- * Includes: I18n, GitHub API integration, Carousel, and UI interactions.
+ * Includes: GitHub API integration, Carousel, and UI interactions.
  */
-
-// =========================================
-// Internationalization (I18n)
-// =========================================
-const translations = {
-    ru: {
-        // Navigation
-        'nav.about': 'О нас',
-        'nav.software': 'Программы',
-        'nav.games': 'Игры',
-        'nav.contact': 'Контакты',
-        'nav.back': 'На главную',
-        'nav.back_short': 'Главная',
-        
-        // Hero Section
-        'hero.subtitle': 'Разрабатываю программы и игры. Все проекты с открытым исходным кодом.',
-        'hero.projects': 'Мои проекты',
-        'hero.contact': 'Связаться',
-        
-        // About Section
-        'about.title': 'О проекте',
-        'about.software': 'Программы',
-        'about.software.desc': 'Утилиты для повседневных задач',
-        'about.games': 'Игры',
-        'about.games.desc': 'Игровые проекты в разработке',
-        'about.opensource': 'Open Source',
-        'about.opensource.desc': 'Весь код открыт на GitHub',
-        
-        // Software Section & Cards
-        'software.title': 'Программы',
-        'software.soon': 'Новые проекты скоро',
-        'software.converter.desc': 'Конвертер медиафайлов с простым интерфейсом',
-        'software.colab': 'Google Colab',
-        'software.colab.desc': 'Блокноты Google Colab: тренировка моделей и каверы',
-        'software.indev': 'В разработке',
-        'software.open': 'Открыть',
-        
-        // Games Section
-        'games.title': 'Игры',
-        'games.soon': 'Скоро',
-        'games.soon.desc': 'Игровые проекты в процессе разработки',
-        
-        // Contact Section
-        'contact.title': 'Контакты',
-        'contact.desc': 'Есть вопросы, идеи или просто хочешь написать? Найди меня на GitHub.',
-        
-        // Footer
-        'footer.rights': '© 2025 MuXolotl. Все права защищены.',
-        'footer.back': '← Вернуться на главную',
-        
-        // Converter Page
-        'converter.subtitle': 'Конвертер медиафайлов с простым и понятным интерфейсом. Конвертируй аудио и видео в нужный формат.',
-        'converter.download': 'Скачать',
-        'converter.features': 'Возможности',
-        'converter.audio': 'Аудио конвертация',
-        'converter.audio.desc': 'Поддержка популярных форматов: MP3, WAV, FLAC, OGG и других',
-        'converter.video': 'Видео конвертация',
-        'converter.video.desc': 'Конвертируй видео в MP4, AVI, MKV и другие форматы',
-        'converter.ui': 'Простой интерфейс',
-        'converter.ui.desc': 'Минималистичный дизайн — ничего лишнего',
-        'converter.quality': 'Настройки качества',
-        'converter.quality.desc': 'Выбирай битрейт и качество выходного файла',
-        'converter.img_fail': 'Изображение не загружено',
-        
-        // Download Section
-        'download.title': 'Скачать',
-        'download.os': 'Операционная система',
-        'download.type': 'Тип установки',
-        'download.installer': 'Установщик (.msi)',
-        'download.recommended': 'Рекомендуется',
-        'download.portable': 'Portable (.exe)',
-        'download.noinstall': 'Без установки',
-        'download.dmg': 'Скачать .dmg',
-        'download.intel': 'Для Mac с процессором Intel',
-        'download.silicon': 'Для Mac M1 / M2 / M3 / M4',
-        'download.deb': 'Скачать .deb',
-        'download.debian': 'Для Debian / Ubuntu',
-        'download.ffmpeg': 'FFmpeg бинарники',
-        'download.allversions': 'Все версии на GitHub →',
-        'download.builtwith': 'Создано с:',
-        
-        // Contributing
-        'contrib.title': 'Участие в разработке',
-        'contrib.heading': 'Проект открыт для контрибьюторов',
-        'contrib.desc': 'MuXolotl-Converter — open source проект. Буду рад любой помощи: исправление багов, новые функции, улучшение документации или просто идеи.',
-        'contrib.bug': 'Сообщить о баге',
-        'contrib.pr': 'Pull Requests',
-        
-        // Mobile Warning
-        'mobile.title': 'Только для компьютеров',
-        'mobile.desc': 'MuXolotl-Converter — десктопное приложение. На мобильных устройствах оно не работает, но вы можете изучить сайт.',
-        'mobile.btn': 'Понятно',
-        
-        // Stats
-        'stats.stars': 'звёзд',
-        'stats.forks': 'форков',
-        'stats.downloads': 'скачиваний',
-        
-        // Formats
-        'formats.title': 'Поддерживаемые форматы',
-        'formats.audio': 'Аудио',
-        'formats.audio.count': '21 формат',
-        'formats.video': 'Видео',
-        'formats.video.count': '22 формата',
-        'formats.note': 'Конвертация работает на базе FFmpeg — поддерживаются практически все популярные форматы',
-        
-        // Share
-        'share.title': 'Поделиться:',
-
-        // Colab Page & Statuses
-        'colab.title': 'Блокноты Google Colab',
-        'colab.subtitle': 'Коллекция скриптов для работы с нейросетями: тренировка RVC моделей, генерация каверов и разделение аудио.',
-        'colab.open': 'Открыть Colab',
-        'colab.backup': 'Резервная ссылка',
-        'colab.train': 'Тренировка моделей',
-        'colab.train.desc': 'Обучение RVC v2 моделей на вашем датасете. Поддержка Tensorboard и сохранения на Drive.',
-        'colab.gen': 'Генерация каверов',
-        'colab.gen.desc': 'Создание AI каверов с использованием предобученных RVC моделей.',
-        'colab.uvr': 'Разделение аудио',
-        'colab.uvr.desc': 'Ultimate Vocal Remover — разделение треков на вокал, инструментал и стемы.',
-        'colab.note': 'Для работы требуется аккаунт Google. Рекомендуется использовать Runtime с GPU.',
-        
-        'status.online': 'Работает',
-        'status.offline': 'Недоступно',
-        'status.online.title': 'Блокнот доступен',
-        'status.online.desc': 'Ссылка работает. Вы можете открыть блокнот в Google Colab и начать работу.',
-        'status.offline.title': 'Блокнот заблокирован',
-        'status.offline.desc': 'Google заблокировал этот блокнот. Пожалуйста, используйте резервную ссылку (Backup Link) или подождите обновления.'
-    },
-    en: {
-        // Navigation
-        'nav.about': 'About',
-        'nav.software': 'Software',
-        'nav.games': 'Games',
-        'nav.contact': 'Contact',
-        'nav.back': 'Back to home',
-        'nav.back_short': 'Home',
-        
-        // Hero
-        'hero.subtitle': 'Developing software and games. All projects are open source.',
-        'hero.projects': 'My Projects',
-        'hero.contact': 'Contact',
-        
-        // About
-        'about.title': 'About',
-        'about.software': 'Software',
-        'about.software.desc': 'Utilities for everyday tasks',
-        'about.games': 'Games',
-        'about.games.desc': 'Game projects in development',
-        'about.opensource': 'Open Source',
-        'about.opensource.desc': 'All code is open on GitHub',
-        
-        // Software & Cards
-        'software.title': 'Software',
-        'software.soon': 'New projects coming soon',
-        'software.converter.desc': 'Media file converter with a simple interface',
-        'software.colab': 'Google Colab',
-        'software.colab.desc': 'Notebooks Google Colab: model training and covers',
-        'software.indev': 'In Development',
-        'software.open': 'Open',
-        
-        // Games
-        'games.title': 'Games',
-        'games.soon': 'Coming Soon',
-        'games.soon.desc': 'Game projects are in development',
-        
-        // Contact
-        'contact.title': 'Contact',
-        'contact.desc': 'Have questions, ideas, or just want to say hi? Find me on GitHub.',
-        
-        // Footer
-        'footer.rights': '© 2025 MuXolotl. All rights reserved.',
-        'footer.back': '← Back to home',
-        
-        // Converter Page
-        'converter.subtitle': 'Media file converter with a simple and intuitive interface. Convert audio and video to any format.',
-        'converter.download': 'Download',
-        'converter.features': 'Features',
-        'converter.audio': 'Audio Conversion',
-        'converter.audio.desc': 'Support for popular formats: MP3, WAV, FLAC, OGG and more',
-        'converter.video': 'Video Conversion',
-        'converter.video.desc': 'Convert video to MP4, AVI, MKV and other formats',
-        'converter.ui': 'Simple Interface',
-        'converter.ui.desc': 'Minimalist design — nothing extra',
-        'converter.quality': 'Quality Settings',
-        'converter.quality.desc': 'Choose bitrate and output file quality',
-        'converter.img_fail': 'Image not found',
-        
-        // Download
-        'download.title': 'Download',
-        'download.os': 'Operating System',
-        'download.type': 'Installation Type',
-        'download.installer': 'Installer (.msi)',
-        'download.recommended': 'Recommended',
-        'download.portable': 'Portable (.exe)',
-        'download.noinstall': 'No installation',
-        'download.dmg': 'Download .dmg',
-        'download.intel': 'For Mac with Intel processor',
-        'download.silicon': 'For Mac M1 / M2 / M3 / M4',
-        'download.deb': 'Download .deb',
-        'download.debian': 'For Debian / Ubuntu',
-        'download.ffmpeg': 'FFmpeg binaries',
-        'download.allversions': 'All versions on GitHub →',
-        'download.builtwith': 'Built with:',
-        
-        // Contributing
-        'contrib.title': 'Contributing',
-        'contrib.heading': 'Open for contributors',
-        'contrib.desc': 'MuXolotl-Converter is an open source project. Any help is welcome: bug fixes, new features, documentation improvements, or just ideas.',
-        'contrib.bug': 'Report a bug',
-        'contrib.pr': 'Pull Requests',
-        
-        // Mobile Warning
-        'mobile.title': 'Desktop Only',
-        'mobile.desc': 'MuXolotl-Converter is a desktop application. It does not work on mobile devices, but feel free to browse the site.',
-        'mobile.btn': 'Got it',
-        
-        // Stats
-        'stats.stars': 'stars',
-        'stats.forks': 'forks',
-        'stats.downloads': 'downloads',
-        
-        // Formats
-        'formats.title': 'Supported Formats',
-        'formats.audio': 'Audio',
-        'formats.audio.count': '21 formats',
-        'formats.video': 'Video',
-        'formats.video.count': '22 formats',
-        'formats.note': 'Conversion is powered by FFmpeg — almost all popular formats are supported',
-        
-        // Share
-        'share.title': 'Share:',
-
-        // Colab Page & Statuses
-        'colab.title': 'Google Colab Notebooks',
-        'colab.subtitle': 'Collection of scripts for neural networks: RVC model training, AI covers generation and audio separation.',
-        'colab.open': 'Open Colab',
-        'colab.backup': 'Backup Link',
-        'colab.train': 'Model Training',
-        'colab.train.desc': 'Training RVC v2 models on your dataset. Supports Tensorboard and Drive saving.',
-        'colab.gen': 'Cover Generation',
-        'colab.gen.desc': 'Creating AI covers using pre-trained RVC models.',
-        'colab.uvr': 'Audio Separation',
-        'colab.uvr.desc': 'Ultimate Vocal Remover — separate tracks into vocals, instrumental and stems.',
-        'colab.note': 'A Google account is required. Using a Runtime with GPU is recommended.',
-        
-        'status.online': 'Online',
-        'status.offline': 'Blocked',
-        'status.online.title': 'Notebook Available',
-        'status.online.desc': 'The link is working. You can open the notebook in Google Colab and start working.',
-        'status.offline.title': 'Notebook Blocked',
-        'status.offline.desc': 'Google has blocked this notebook. Please use the Backup Link or wait for an update.'
-    }
-};
-
-let currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('ru') ? 'ru' : 'en');
-
-function t(key) {
-    return translations[currentLang][key] || translations['en'][key] || key;
-}
-
-function applyTranslations() {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        el.textContent = t(key);
-    });
-    
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        el.placeholder = t(key);
-    });
-    
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === currentLang);
-    });
-
-    // Update Colab statuses text
-    document.querySelectorAll('.status-text').forEach(el => {
-        const status = el.getAttribute('data-status-key');
-        if(status) el.textContent = t(status);
-    });
-    
-    // Update modal text if open
-    const modal = document.getElementById('statusModal');
-    if (modal && modal.classList.contains('active')) {
-        const isOnline = modal.querySelector('.status-modal-icon').classList.contains('online');
-        const titleKey = isOnline ? 'status.online.title' : 'status.offline.title';
-        const descKey = isOnline ? 'status.online.desc' : 'status.offline.desc';
-        modal.querySelector('h3').textContent = t(titleKey);
-        modal.querySelector('p').textContent = t(descKey);
-    }
-}
-
-function setLanguage(lang) {
-    currentLang = lang;
-    localStorage.setItem('lang', lang);
-    applyTranslations();
-    
-    // Update image placeholders
-    document.querySelectorAll('.img-placeholder span').forEach(span => {
-        span.textContent = t('converter.img_fail');
-    });
-}
-
-function initLanguageSwitcher() {
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            setLanguage(btn.dataset.lang);
-        });
-    });
-    applyTranslations();
-}
 
 // =========================================
 // UI: Mobile & Navigation
@@ -392,7 +80,7 @@ function initSmoothScroll() {
 // =========================================
 async function fetchGitHubStats(repo) {
     const CACHE_KEY = `gh_stats_${repo}`;
-    const CACHE_EXPIRATION_MS = 60 * 60 * 1000; // 1 hour
+    const CACHE_EXPIRATION_MS = 60 * 60 * 1000;
 
     try {
         const cachedRaw = localStorage.getItem(CACHE_KEY);
@@ -402,7 +90,7 @@ async function fetchGitHubStats(repo) {
         if (cachedRaw) {
             const { timestamp, data, releases } = JSON.parse(cachedRaw);
             if (Date.now() - timestamp < CACHE_EXPIRATION_MS) {
-                if(releases) updateDownloadLinks(releases);
+                if (releases) updateDownloadLinks(releases);
                 return data;
             }
         }
@@ -452,7 +140,7 @@ async function fetchGitHubStats(repo) {
         const cachedRaw = localStorage.getItem(CACHE_KEY);
         if (cachedRaw) {
             const cache = JSON.parse(cachedRaw);
-            if(cache.releases) updateDownloadLinks(cache.releases);
+            if (cache.releases) updateDownloadLinks(cache.releases);
             return cache.data;
         }
         return null;
@@ -493,28 +181,19 @@ function formatRelativeDate(dateString) {
     const diffMs = now - date;
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
     
-    if (currentLang === 'ru') {
-        if (diffDays === 0) return 'сегодня';
-        if (diffDays === 1) return 'вчера';
-        if (diffDays < 7) return `${diffDays} ${pluralize(diffDays, 'день', 'дня', 'дней')} назад`;
-        if (diffDays < 30) {
-            const weeks = Math.floor(diffDays / 7);
-            return `${weeks} ${pluralize(weeks, 'неделю', 'недели', 'недель')} назад`;
-        }
-        if (diffDays < 365) {
-            const months = Math.floor(diffDays / 30);
-            return `${months} ${pluralize(months, 'месяц', 'месяца', 'месяцев')} назад`;
-        }
-        const years = Math.floor(diffDays / 365);
-        return `${years} ${pluralize(years, 'год', 'года', 'лет')} назад`;
-    } else {
-        if (diffDays === 0) return 'today';
-        if (diffDays === 1) return 'yesterday';
-        if (diffDays < 7) return `${diffDays} days ago`;
-        if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-        if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
-        return `${Math.floor(diffDays / 365)} years ago`;
+    if (diffDays === 0) return 'сегодня';
+    if (diffDays === 1) return 'вчера';
+    if (diffDays < 7) return `${diffDays} ${pluralize(diffDays, 'день', 'дня', 'дней')} назад`;
+    if (diffDays < 30) {
+        const weeks = Math.floor(diffDays / 7);
+        return `${weeks} ${pluralize(weeks, 'неделю', 'недели', 'недель')} назад`;
     }
+    if (diffDays < 365) {
+        const months = Math.floor(diffDays / 30);
+        return `${months} ${pluralize(months, 'месяц', 'месяца', 'месяцев')} назад`;
+    }
+    const years = Math.floor(diffDays / 365);
+    return `${years} ${pluralize(years, 'год', 'года', 'лет')} назад`;
 }
 
 function pluralize(n, one, few, many) {
@@ -544,8 +223,7 @@ function updateGitHubStatsUI(stats) {
     if (lastUpdateEl && stats?.lastRelease) {
         const relativeDate = formatRelativeDate(stats.lastRelease);
         if (relativeDate) {
-            const prefix = currentLang === 'ru' ? 'Обновлено' : 'Updated';
-            lastUpdateEl.textContent = `${prefix} ${relativeDate}`;
+            lastUpdateEl.textContent = `Обновлено ${relativeDate}`;
             lastUpdateEl.classList.remove('hidden');
         }
     }
@@ -566,7 +244,7 @@ function initShareButtons() {
             
             let shareUrl = '';
             
-            switch(platform) {
+            switch (platform) {
                 case 'twitter':
                     shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
                     break;
@@ -586,7 +264,7 @@ function initShareButtons() {
 }
 
 function handleImageError(img) {
-    img.onerror = null; 
+    img.onerror = null;
     
     const placeholder = document.createElement('div');
     placeholder.className = 'img-placeholder';
@@ -598,7 +276,7 @@ function handleImageError(img) {
         <svg class="w-12 h-12 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
         </svg>
-        <span class="text-sm font-medium">${t('converter.img_fail')}</span>
+        <span class="text-sm font-medium">Изображение не загружено</span>
     `;
     
     img.parentNode.replaceChild(placeholder, img);
@@ -628,7 +306,7 @@ function initMobileWarning() {
 }
 
 function openLightbox(src) {
-    if(src.includes('placeholder')) return;
+    if (src.includes('placeholder')) return;
 
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightboxImg');
@@ -649,7 +327,6 @@ function closeLightbox() {
 }
 window.closeLightbox = closeLightbox;
 
-// Global Escape handler
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeLightbox();
@@ -682,7 +359,7 @@ function initOSSelector() {
     function detectOS() {
         const ua = navigator.userAgent.toLowerCase();
         if (ua.includes('win')) return 'windows';
-        if (ua.includes('mac')) return 'macos-intel'; 
+        if (ua.includes('mac')) return 'macos-intel';
         if (ua.includes('linux')) return 'linux';
         return 'windows';
     }
@@ -703,7 +380,7 @@ function initCarousel() {
 
     const scrollAmount = () => {
         const itemWidth = track.children[0].offsetWidth;
-        const gap = 24; // 1.5rem
+        const gap = 24;
         return itemWidth + gap;
     };
 
@@ -732,8 +409,10 @@ function openStatusModal(element) {
         ? '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>'
         : '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
     
-    title.textContent = t(isOnline ? 'status.online.title' : 'status.offline.title');
-    desc.textContent = t(isOnline ? 'status.online.desc' : 'status.offline.desc');
+    title.textContent = isOnline ? 'Блокнот доступен' : 'Блокнот заблокирован';
+    desc.textContent = isOnline 
+        ? 'Ссылка работает. Вы можете открыть блокнот в Google Colab и начать работу.'
+        : 'Google заблокировал этот блокнот. Пожалуйста, используйте резервную ссылку или подождите обновления.';
     
     modal.classList.add('active');
 }
@@ -756,7 +435,7 @@ async function initColabStatus() {
 
     try {
         const response = await fetch('colab-status.json');
-        if (!response.ok) return; 
+        if (!response.ok) return;
 
         const statuses = await response.json();
         
@@ -767,10 +446,8 @@ async function initColabStatus() {
                 element.className = `status-badge ${isOnline ? 'online' : 'offline'}`;
                 
                 const textSpan = element.querySelector('.status-text');
-                if(textSpan) {
-                    const statusKey = isOnline ? 'status.online' : 'status.offline';
-                    textSpan.setAttribute('data-status-key', statusKey);
-                    textSpan.textContent = t(statusKey);
+                if (textSpan) {
+                    textSpan.textContent = isOnline ? 'Работает' : 'Недоступно';
                 }
             }
         });
@@ -787,7 +464,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollTopButton();
     initScrollAnimations();
     initSmoothScroll();
-    initLanguageSwitcher();
     initMobileWarning();
     initShareButtons();
     initOSSelector();

@@ -5,23 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MuXolotl — Программы и игры</title>
     
-    <!-- SEO -->
     <meta name="description" content="MuXolotl — open source программы, Google Colab блокноты и игры.">
     <meta name="keywords" content="MuXolotl, конвертер, colab, RVC, AI covers, open source, программы, игры">
     <meta name="author" content="MuXolotl">
     
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://muxolotl.github.io/">
     <meta property="og:title" content="MuXolotl — Программы и игры">
     <meta property="og:description" content="Open source программы и игры. Конвертер медиафайлов, Google Colab блокноты и другие проекты.">
     
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MuXolotl — Программы и игры">
     <meta name="twitter:description" content="Open source программы и игры. Конвертер медиафайлов и другие проекты.">
     
-    <!-- Тема браузера -->
     <meta name="theme-color" content="#030712">
     
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -30,33 +26,24 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen overflow-x-hidden">
-    <!-- Декоративные фоновые блобы -->
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
 
-    <!-- Навигация -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="#" class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center font-bold text-lg">
-                        M
-                    </div>
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center font-bold text-lg">M</div>
                     <span class="text-xl font-semibold">MuXolotl</span>
                 </a>
                 <div class="hidden md:flex items-center gap-8">
-                    <a href="#about" class="nav-link text-gray-300 hover:text-white transition" data-i18n="nav.about">О нас</a>
-                    <a href="#software" class="nav-link text-gray-300 hover:text-white transition" data-i18n="nav.software">Программы</a>
-                    <a href="#games" class="nav-link text-gray-300 hover:text-white transition" data-i18n="nav.games">Игры</a>
-                    <a href="#contact" class="nav-link text-gray-300 hover:text-white transition" data-i18n="nav.contact">Контакты</a>
-                    <!-- Переключатель языка -->
-                    <div class="lang-switcher">
-                        <button class="lang-btn active" data-lang="ru">RU</button>
-                        <button class="lang-btn" data-lang="en">EN</button>
-                    </div>
+                    <a href="#about" class="nav-link text-gray-300 hover:text-white transition">О нас</a>
+                    <a href="#software" class="nav-link text-gray-300 hover:text-white transition">Программы</a>
+                    <a href="#games" class="nav-link text-gray-300 hover:text-white transition">Игры</a>
+                    <a href="#contact" class="nav-link text-gray-300 hover:text-white transition">Контакты</a>
                 </div>
                 <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,49 +51,36 @@
                     </svg>
                 </button>
             </div>
-            <!-- Мобильное меню -->
             <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-800 pt-4">
                 <div class="flex flex-col gap-4">
-                    <a href="#about" class="text-gray-300 hover:text-white transition" data-i18n="nav.about">О нас</a>
-                    <a href="#software" class="text-gray-300 hover:text-white transition" data-i18n="nav.software">Программы</a>
-                    <a href="#games" class="text-gray-300 hover:text-white transition" data-i18n="nav.games">Игры</a>
-                    <a href="#contact" class="text-gray-300 hover:text-white transition" data-i18n="nav.contact">Контакты</a>
-                    <div class="lang-switcher w-fit">
-                        <button class="lang-btn active" data-lang="ru">RU</button>
-                        <button class="lang-btn" data-lang="en">EN</button>
-                    </div>
+                    <a href="#about" class="text-gray-300 hover:text-white transition">О нас</a>
+                    <a href="#software" class="text-gray-300 hover:text-white transition">Программы</a>
+                    <a href="#games" class="text-gray-300 hover:text-white transition">Игры</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white transition">Контакты</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero секция -->
     <section class="pt-32 pb-20 px-6 relative z-10">
         <div class="max-w-6xl mx-auto text-center">
-            <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center font-bold text-4xl mx-auto mb-8 shadow-2xl shadow-purple-500/20">
-                M
-            </div>
+            <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center font-bold text-4xl mx-auto mb-8 shadow-2xl shadow-purple-500/20">M</div>
             <h1 class="text-5xl md:text-6xl font-bold mb-6">
                 <span class="gradient-text">MuXolotl</span>
             </h1>
-            <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed" data-i18n="hero.subtitle">
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
                 Разрабатываю программы и игры. Все проекты с открытым исходным кодом.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#software" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-medium hover:opacity-90 transition" data-i18n="hero.projects">
-                    Мои проекты
-                </a>
-                <a href="#contact" class="px-8 py-3 border border-gray-700 rounded-lg font-medium hover:bg-gray-800 transition" data-i18n="hero.contact">
-                    Связаться
-                </a>
+                <a href="#software" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-medium hover:opacity-90 transition">Мои проекты</a>
+                <a href="#contact" class="px-8 py-3 border border-gray-700 rounded-lg font-medium hover:bg-gray-800 transition">Связаться</a>
             </div>
         </div>
     </section>
 
-    <!-- О проекте -->
     <section id="about" class="py-20 px-6 bg-gray-900/50 relative z-10">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-4" data-i18n="about.title">О проекте</h2>
+            <h2 class="text-3xl font-bold text-center mb-4">О проекте</h2>
             <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
             
             <div class="grid md:grid-cols-3 gap-8">
@@ -116,8 +90,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2" data-i18n="about.software">Программы</h3>
-                    <p class="text-gray-400 text-sm" data-i18n="about.software.desc">Утилиты для повседневных задач</p>
+                    <h3 class="text-lg font-semibold mb-2">Программы</h3>
+                    <p class="text-gray-400 text-sm">Утилиты для повседневных задач</p>
                 </div>
                 
                 <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6 text-center card-hover">
@@ -127,8 +101,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2" data-i18n="about.games">Игры</h3>
-                    <p class="text-gray-400 text-sm" data-i18n="about.games.desc">Игровые проекты в разработке</p>
+                    <h3 class="text-lg font-semibold mb-2">Игры</h3>
+                    <p class="text-gray-400 text-sm">Игровые проекты в разработке</p>
                 </div>
                 
                 <div class="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6 text-center card-hover">
@@ -137,22 +111,19 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2" data-i18n="about.opensource">Open Source</h3>
-                    <p class="text-gray-400 text-sm" data-i18n="about.opensource.desc">Весь код открыт на GitHub</p>
+                    <h3 class="text-lg font-semibold mb-2">Open Source</h3>
+                    <p class="text-gray-400 text-sm">Весь код открыт на GitHub</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Программы (КАРУСЕЛЬ) -->
     <section id="software" class="py-20 px-6 relative z-10">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-4" data-i18n="software.title">Программы</h2>
+            <h2 class="text-3xl font-bold text-center mb-4">Программы</h2>
             <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
             
-            <!-- Обертка карусели -->
             <div class="carousel-wrapper group/carousel">
-                <!-- Кнопки навигации -->
                 <button class="carousel-btn prev" aria-label="Previous">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -164,14 +135,11 @@
                     </svg>
                 </button>
 
-                <!-- Трек с карточками -->
                 <div class="carousel-track">
                     
-                    <!-- ITEM 1: Google Colab -->
                     <div class="carousel-item">
                         <a href="colab.html" class="bg-gray-800/50 border border-gray-700/50 rounded-xl overflow-hidden card-hover block h-full flex flex-col">
                             <div class="h-40 w-full bg-gradient-to-br from-orange-900/20 to-yellow-900/20 flex items-center justify-center relative overflow-hidden">
-                                <!-- Декоративный фон -->
                                 <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 2px 2px, rgba(251, 146, 60, 0.5) 1px, transparent 0); background-size: 20px 20px;"></div>
                                 <svg class="w-16 h-16 text-orange-500 shadow-lg" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M15.71 16.71c-1.12.29-2.75.24-4.05-.34-.32-.15-.36-.18-.74-.18-1.75 0-3.44 1.15-4.18 2.86-.75 1.73-.29 3.73 1.15 5.04 1.43 1.31 3.58 1.39 5.11.21 1.54-1.2 2.34-3.19 2.03-5.08-.15-.95-.67-2.26-1.32-2.51zm-2.2 5.23c-.64.5-1.59.45-2.2-.09-.61-.54-.78-1.46-.38-2.15.39-.68 1.24-1.05 2.01-.86.78.18 1.35.88 1.37 1.68.01.8-.35 1.42-.8 1.42zm3.23-8.57c-.89-.57-2.29-.77-3.52-.51-.31.07-.38.05-.72.05-1.83 0-3.68 1.08-4.59 2.87-.91 1.8-1.08 3.96-.41 6.12.67 2.16 2.44 3.73 4.72 4.19 2.28.45 4.72-.41 6.1-2.15.67-.85 1.57-2.53 1.59-3.48.04-1.89-1.18-3.79-3.17-5.09z"/>
@@ -180,17 +148,16 @@
                             </div>
                             <div class="p-6 flex-1 flex flex-col">
                                 <div class="flex items-center justify-between mb-3">
-                                    <h3 class="text-lg font-semibold" data-i18n="software.colab">Google Colab</h3>
+                                    <h3 class="text-lg font-semibold">Google Colab</h3>
                                 </div>
-                                <p class="text-gray-400 text-sm mb-4 flex-1" data-i18n="software.colab.desc">Блокноты Google Colab: тренировка моделей и каверы</p>
+                                <p class="text-gray-400 text-sm mb-4 flex-1">Блокноты Google Colab: тренировка моделей и каверы</p>
                                 <div class="flex items-center gap-2 flex-wrap mt-auto">
-                                    <span class="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded" data-i18n="software.open">Открыть</span>
+                                    <span class="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">Открыть</span>
                                 </div>
                             </div>
                         </a>
                     </div>
 
-                    <!-- ITEM 2: MuXolotl-Converter -->
                     <div class="carousel-item">
                         <a href="converter.html" class="bg-gray-800/50 border border-gray-700/50 rounded-xl overflow-hidden card-hover block h-full flex flex-col group">
                             <div class="h-40 w-full overflow-hidden">
@@ -206,13 +173,12 @@
                                     <h3 class="text-lg font-semibold">MuXolotl-Converter</h3>
                                     <span class="version-tag px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full font-medium">v1.0.2</span>
                                 </div>
-                                <p class="text-gray-400 text-sm mb-4 flex-1" data-i18n="software.converter.desc">Конвертер медиафайлов с простым интерфейсом</p>
+                                <p class="text-gray-400 text-sm mb-4 flex-1">Конвертер медиафайлов с простым интерфейсом</p>
                                 <div class="flex items-center gap-2 flex-wrap mt-auto">
-                                    <span class="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded" data-i18n="software.indev">В разработке</span>
+                                    <span class="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded">В разработке</span>
                                     <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Open Source</span>
                                 </div>
                                 
-                                <!-- GitHub статистика -->
                                 <div class="github-stats mt-4 pt-4 border-t border-gray-700/50">
                                     <div class="github-stat loading" data-stat="stars">
                                         <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
@@ -227,13 +193,12 @@
                         </a>
                     </div>
 
-                    <!-- ITEM 3: Placeholder -->
                     <div class="carousel-item">
                         <div class="bg-gray-800/30 border border-dashed border-gray-700/50 rounded-xl p-6 flex flex-col items-center justify-center h-full text-center min-h-[300px]">
                             <svg class="w-12 h-12 text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                             </svg>
-                            <p class="text-gray-500" data-i18n="software.soon">Новые проекты скоро</p>
+                            <p class="text-gray-500">Новые проекты скоро</p>
                         </div>
                     </div>
 
@@ -242,10 +207,9 @@
         </div>
     </section>
 
-    <!-- Игры -->
     <section id="games" class="py-20 px-6 bg-gray-900/50 relative z-10">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-4" data-i18n="games.title">Игры</h2>
+            <h2 class="text-3xl font-bold text-center mb-4">Игры</h2>
             <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
             
             <div class="text-center py-16">
@@ -254,24 +218,19 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/>
                     </svg>
                 </div>
-                <h3 class="text-2xl font-semibold mb-4 text-gray-200" data-i18n="games.soon">Скоро</h3>
-                <p class="text-gray-400 max-w-md mx-auto" data-i18n="games.soon.desc">
-                    Игровые проекты в процессе разработки
-                </p>
+                <h3 class="text-2xl font-semibold mb-4 text-gray-200">Скоро</h3>
+                <p class="text-gray-400 max-w-md mx-auto">Игровые проекты в процессе разработки</p>
             </div>
         </div>
     </section>
 
-    <!-- Контакты -->
     <section id="contact" class="py-20 px-6 relative z-10">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-4" data-i18n="contact.title">Контакты</h2>
+            <h2 class="text-3xl font-bold text-center mb-4">Контакты</h2>
             <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
             
             <div class="max-w-xl mx-auto text-center">
-                <p class="text-gray-400 mb-8" data-i18n="contact.desc">
-                    Есть вопросы, идеи или просто хочешь написать? Найди меня на GitHub.
-                </p>
+                <p class="text-gray-400 mb-8">Есть вопросы, идеи или просто хочешь написать? Найди меня на GitHub.</p>
                 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="https://github.com/MuXolotl" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-3 px-6 py-3 bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 transition">
@@ -285,24 +244,20 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="py-8 px-6 border-t border-gray-800">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center font-bold text-sm">
-                    M
-                </div>
-                <span class="text-gray-400" data-i18n="footer.rights">© 2025 MuXolotl. Все права защищены.</span>
+                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center font-bold text-sm">M</div>
+                <span class="text-gray-400">© 2026 MuXolotl. Все права защищены.</span>
             </div>
             <div class="flex items-center gap-6 text-sm text-gray-500">
-                <a href="#about" class="hover:text-gray-300 transition" data-i18n="nav.about">О нас</a>
-                <a href="#software" class="hover:text-gray-300 transition" data-i18n="nav.software">Программы</a>
-                <a href="#games" class="hover:text-gray-300 transition" data-i18n="nav.games">Игры</a>
+                <a href="#about" class="hover:text-gray-300 transition">О нас</a>
+                <a href="#software" class="hover:text-gray-300 transition">Программы</a>
+                <a href="#games" class="hover:text-gray-300 transition">Игры</a>
             </div>
         </div>
     </footer>
 
-    <!-- Кнопка "Наверх" -->
     <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
