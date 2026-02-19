@@ -57,18 +57,6 @@ class AppFooter extends HTMLElement {
     connectedCallback() {
         // Динамический год (забирает текущий из системы пользователя)
         const currentYear = new Date().getFullYear();
-        const isInner = this.getAttribute('page') === 'inner';
-
-        // Правая часть футера зависит от страницы
-        const rightSide = isInner ? `
-            <a href="index.html" class="text-gray-500 hover:text-gray-300 transition">← Вернуться на главную</a>
-        ` : `
-            <div class="flex items-center gap-6 text-sm text-gray-500">
-                <a href="#about" class="hover:text-gray-300 transition">О нас</a>
-                <a href="#software" class="hover:text-gray-300 transition">Программы</a>
-                <a href="#games" class="hover:text-gray-300 transition">Игры</a>
-            </div>
-        `;
 
         this.innerHTML = `
         <footer class="py-8 px-6 border-t border-gray-800 relative z-10">
@@ -77,13 +65,16 @@ class AppFooter extends HTMLElement {
                     <img src="images/icon.png" alt="Icon" class="w-8 h-8 object-contain">
                     <span class="text-gray-400">© ${currentYear} MuXolotl. Все права защищены.</span>
                 </div>
-                ${rightSide}
+                <div class="flex items-center gap-6 text-sm text-gray-500">
+                    <a href="index.html#about" class="hover:text-gray-300 transition">О нас</a>
+                    <a href="index.html#software" class="hover:text-gray-300 transition">Программы</a>
+                    <a href="index.html#games" class="hover:text-gray-300 transition">Игры</a>
+                </div>
             </div>
         </footer>
         `;
     }
 }
 
-// Регистрируем новые теги
 customElements.define('app-navbar', AppNavbar);
 customElements.define('app-footer', AppFooter);
