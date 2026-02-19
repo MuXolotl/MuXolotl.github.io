@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-    <link rel="icon" type="image/png" href="images/icon.png">
-    <link rel="apple-touch-icon" href="images/icon.png">
+    <link rel="icon" type="image/png" href="/images/icon.png">
+    <link rel="apple-touch-icon" href="/images/icon.png">
 	
     <title>Страница не найдена — MuXolotl</title>
     
@@ -15,9 +15,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     
-    <script src="components.js"></script>
+    <script src="/components.js"></script>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen overflow-x-hidden flex flex-col">
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
@@ -34,11 +34,13 @@
                     404
                 </span>
             </div>
+
             <h1 class="text-3xl md:text-4xl font-bold mb-4">Страница не найдена</h1>
             <p class="text-xl text-gray-400 mb-10 max-w-lg mx-auto">
                 Ссылка, по которой вы перешли, устарела, была удалена или никогда не существовала.
             </p>
-            <a href="index.html" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-lg hover:opacity-90 transition transform hover:scale-105 shadow-lg shadow-blue-600/25">
+
+            <a href="/index.html" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-lg hover:opacity-90 transition transform hover:scale-105 shadow-lg shadow-blue-600/25">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
@@ -47,8 +49,8 @@
         </div>
     </main>
 
-    <app-footer page="inner"></app-footer>
+    <app-footer></app-footer>
 
-    <script src="main.js"></script>
+    <script src="/main.js"></script>
 </body>
 </html>
