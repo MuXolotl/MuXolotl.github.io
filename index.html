@@ -18,16 +18,14 @@
     <meta property="og:title" content="MuXolotl — Программы и игры">
     <meta property="og:description" content="Open source программы и игры. Конвертер медиафайлов, Google Colab блокноты и другие проекты.">
     
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MuXolotl — Программы и игры">
-    <meta name="twitter:description" content="Open source программы и игры. Конвертер медиафайлов и другие проекты.">
-    
     <meta name="theme-color" content="#030712">
     
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    
+    <script src="components.js"></script>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen overflow-x-hidden">
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
@@ -36,35 +34,7 @@
         <div class="blob blob-3"></div>
     </div>
 
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
-        <div class="max-w-6xl mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <a href="#" class="flex items-center gap-3">
-                    <img src="images/icon.png" alt="Icon" class="w-10 h-10 object-contain">
-                    <span class="text-xl font-semibold">MuXolotl</span>
-                </a>
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#about" class="nav-link text-gray-300 hover:text-white transition">О нас</a>
-                    <a href="#software" class="nav-link text-gray-300 hover:text-white transition">Программы</a>
-                    <a href="#games" class="nav-link text-gray-300 hover:text-white transition">Игры</a>
-                    <a href="#contact" class="nav-link text-gray-300 hover:text-white transition">Контакты</a>
-                </div>
-                <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
-            </div>
-            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-800 pt-4">
-                <div class="flex flex-col gap-4">
-                    <a href="#about" class="text-gray-300 hover:text-white transition">О нас</a>
-                    <a href="#software" class="text-gray-300 hover:text-white transition">Программы</a>
-                    <a href="#games" class="text-gray-300 hover:text-white transition">Игры</a>
-                    <a href="#contact" class="text-gray-300 hover:text-white transition">Контакты</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <app-navbar></app-navbar>
 
     <section class="pt-16 pb-20 px-6 relative z-10">
         <div class="max-w-6xl mx-auto text-center">
@@ -250,19 +220,7 @@
         </div>
     </section>
 
-    <footer class="py-8 px-6 border-t border-gray-800">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <img src="images/icon.png" alt="Logo" class="w-8 h-8 object-contain">
-                <span class="text-gray-400">© 2026 MuXolotl. Все права защищены.</span>
-            </div>
-            <div class="flex items-center gap-6 text-sm text-gray-500">
-                <a href="#about" class="hover:text-gray-300 transition">О нас</a>
-                <a href="#software" class="hover:text-gray-300 transition">Программы</a>
-                <a href="#games" class="hover:text-gray-300 transition">Игры</a>
-            </div>
-        </div>
-    </footer>
+    <app-footer></app-footer>
 
     <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -48,6 +48,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    
+	<script src="components.js"></script>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen overflow-x-hidden">
     <!-- Предупреждение для мобильных -->
@@ -64,22 +66,7 @@
         <div class="blob blob-2"></div>
     </div>
 
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
-        <div class="max-w-6xl mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <a href="index.html" class="flex items-center gap-3">
-                    <img src="images/icon.png" alt="Icon" class="w-10 h-10 object-contain">
-                    <span class="text-xl font-semibold">MuXolotl</span>
-                </a>
-                <a href="index.html" class="text-gray-300 hover:text-white transition flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                    </svg>
-                    <span>На главную</span>
-                </a>
-            </div>
-        </div>
-    </nav>
+    <app-navbar page="inner"></app-navbar>
 
     <section class="pt-32 pb-16 px-6 relative z-10">
         <div class="max-w-4xl mx-auto">
@@ -493,15 +480,7 @@
         </div>
     </section>
 
-    <footer class="py-8 px-6 border-t border-gray-800 relative z-10">
-        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <img src="images/icon.png" alt="Icon" class="w-8 h-8 object-contain">
-                <span class="text-gray-400">© 2026 MuXolotl</span>
-            </div>
-            <a href="index.html" class="text-gray-500 hover:text-gray-300 transition">← Вернуться на главную</a>
-        </div>
-    </footer>
+    <app-footer page="inner"></app-footer>
 
     <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
