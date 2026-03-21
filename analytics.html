@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <title>MuXolotl — Аналитика</title>
+    <meta name="theme-color" content="#030712">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="components.js"></script>
+    <style>
+        .stat-card {
+            background: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(75, 85, 99, 0.5);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+        }
+        .online-dot {
+            width: 10px;
+            height: 10px;
+            background: #4ade80;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
+        }
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 120px;
+            padding-top: 1rem;
+        }
+        .bar-chart .bar-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+        }
+        .bar-chart .bar {
+            width: 100%;
+            max-width: 40px;
+            background: linear-gradient(to top, #3b82f6, #8b5cf6);
+            border-radius: 4px 4px 0 0;
+            min-height: 2px;
+            transition: height 0.5s ease;
+        }
+        .bar-chart .bar-value {
+            font-size: 0.65rem;
+            color: #9ca3af;
+            margin-bottom: 4px;
+            min-height: 14px;
+        }
+        .bar-chart .bar-label {
+            font-size: 0.6rem;
+            color: #6b7280;
+            margin-top: 6px;
+            white-space: nowrap;
+        }
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        .table-row:last-child { border-bottom: none; }
+        .table-key { font-size: 0.875rem; color: #d1d5db; font-family: monospace; }
+        .table-value { font-size: 0.875rem; font-weight: 600; color: #f3f4f6; font-variant-numeric: tabular-nums; }
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 1px solid transparent;
+            background: transparent;
+            color: #9ca3af;
+        }
+        .tab-btn:hover { color: #e5e7eb; background: rgba(55, 65, 81, 0.3); }
+        .tab-btn.active { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border-color: rgba(59, 130, 246, 0.3); }
+        .online-list-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            background: rgba(55, 65, 81, 0.3);
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .refresh-spin { animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #authOverlay { position: fixed; inset: 0; background: #030712; z-index: 999; display: flex; align-items: center; justify-content: center; }
+        #authOverlay.hidden { display: none; }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen overflow-x-hidden">
+    <!-- Авторизация через Firebase Auth -->
+    <div id="authOverlay">
+        <div class="text-center p-8">
+            <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Аналитика</h2>
+            <p class="text-gray-400 text-sm mb-6">Войдите с аккаунтом администратора</p>
+            <form id="authForm" class="flex flex-col gap-3 max-w-xs mx-auto">
+                <input id="authEmail" type="email" placeholder="Email" class="px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-blue-500 focus:outline-none transition" autocomplete="email">
+                <input id="authPassword" type="password" placeholder="Пароль" class="px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-blue-500 focus:outline-none transition" autocomplete="current-password">
+                <button type="submit" id="authSubmitBtn" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-medium hover:opacity-90 transition">
+                    Войти
+                </button>
+                <p id="authError" class="text-red-400 text-sm hidden"></p>
+            </form>
+        </div>
+    </div>
+
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <app-navbar page="inner"></app-navbar>
+
+    <main id="dashboardContent" class="pt-28 pb-16 px-6 relative z-10 hidden">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center justify-between mb-8 flex-wrap gap-4">
+                <div>
+                    <h1 class="text-3xl font-bold">📊 Аналитика</h1>
+                    <p class="text-gray-400 text-sm mt-1">Данные обновляются в реальном времени</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span id="adminEmail" class="text-xs text-gray-500"></span>
+                    <button onclick="adminLogout()" class="text-xs text-gray-400 hover:text-red-400 transition">Выйти</button>
+                    <div id="connectionStatus" class="flex items-center gap-2 text-sm text-gray-400">
+                        <span class="online-dot"></span>
+                        <span>Подключено</span>
+                    </div>
+                    <button onclick="refreshAll()" id="refreshBtn" class="p-2 bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 transition" title="Обновить">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="stat-card">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="online-dot"></span>
+                        <span class="text-xs text-green-400 font-medium uppercase tracking-wide">Сейчас онлайн</span>
+                    </div>
+                    <div id="onlineCount" class="stat-number text-green-400">0</div>
+                    <div class="stat-label">пользователей</div>
+                </div>
+                <div class="stat-card">
+                    <div class="text-xs text-blue-400 font-medium uppercase tracking-wide mb-2">Просмотры</div>
+                    <div id="totalPageviews" class="stat-number text-blue-400">—</div>
+                    <div class="stat-label">всего</div>
+                </div>
+                <div class="stat-card">
+                    <div class="text-xs text-purple-400 font-medium uppercase tracking-wide mb-2">Уникальные</div>
+                    <div id="totalVisitors" class="stat-number text-purple-400">—</div>
+                    <div class="stat-label">посетителей</div>
+                </div>
+                <div class="stat-card">
+                    <div class="text-xs text-amber-400 font-medium uppercase tracking-wide mb-2">Клики</div>
+                    <div id="totalClicks" class="stat-number text-amber-400">—</div>
+                    <div class="stat-label">всего</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-8">
+                <div class="stat-card">
+                    <div class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-2">Сегодня просмотров</div>
+                    <div id="todayPageviews" class="text-2xl font-bold text-gray-200">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-2">Сегодня уникальных</div>
+                    <div id="todayVisitors" class="text-2xl font-bold text-gray-200">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-2">Сегодня кликов</div>
+                    <div id="todayClicks" class="text-2xl font-bold text-gray-200">—</div>
+                </div>
+            </div>
+
+            <div class="stat-card mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold flex items-center gap-2">
+                        <span class="online-dot"></span>
+                        Онлайн пользователи
+                    </h3>
+                    <span id="onlineListCount" class="text-sm text-gray-400">0 активных</span>
+                </div>
+                <div id="onlineList" class="max-h-48 overflow-y-auto">
+                    <p class="text-gray-500 text-sm">Нет активных пользователей</p>
+                </div>
+            </div>
+
+            <div class="stat-card mb-8">
+                <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                    <h3 class="font-semibold">Посещения по дням</h3>
+                    <div class="flex gap-1">
+                        <button class="tab-btn active" onclick="setChartPeriod(7, this)">7 дней</button>
+                        <button class="tab-btn" onclick="setChartPeriod(14, this)">14 дней</button>
+                        <button class="tab-btn" onclick="setChartPeriod(30, this)">30 дней</button>
+                    </div>
+                </div>
+                <div id="dailyChart" class="bar-chart"></div>
+            </div>
+
+            <div class="flex gap-2 mb-4">
+                <button class="tab-btn active" onclick="showTab('pages', this)">По страницам</button>
+                <button class="tab-btn" onclick="showTab('clicks', this)">По кликам</button>
+            </div>
+
+            <div id="tab-pages" class="stat-card mb-8">
+                <h3 class="font-semibold mb-4">Просмотры по страницам</h3>
+                <div id="pageviewsList"><p class="text-gray-500 text-sm">Загрузка...</p></div>
+            </div>
+
+            <div id="tab-clicks" class="stat-card mb-8 hidden">
+                <h3 class="font-semibold mb-4">Клики по элементам</h3>
+                <div id="clicksList"><p class="text-gray-500 text-sm">Загрузка...</p></div>
+            </div>
+
+            <div class="stat-card border-red-900/30">
+                <h3 class="font-semibold mb-2 text-red-400">⚠️ Управление данными</h3>
+                <p class="text-gray-400 text-sm mb-4">Сброс необратим. Все данные аналитики будут удалены.</p>
+                <button onclick="confirmReset()" class="px-4 py-2 bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg text-sm hover:bg-red-500/20 transition">
+                    Сбросить все данные
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <app-footer></app-footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+    <script src="analytics.js"></script>
+
+    <script>
+    // =========================================
+    // Admin Auth via Firebase Email/Password
+    // =========================================
+    const authOverlay = document.getElementById('authOverlay');
+    const dashboardContent = document.getElementById('dashboardContent');
+    const authForm = document.getElementById('authForm');
+    const authError = document.getElementById('authError');
+
+    function showAuthError(msg) {
+        authError.textContent = msg;
+        authError.classList.remove('hidden');
+    }
+
+    function hideAuthError() {
+        authError.classList.add('hidden');
+    }
+
+    // Ждём инициализации Firebase из analytics.js
+    function waitForFirebase(callback) {
+        if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+            callback();
+        } else {
+            setTimeout(() => waitForFirebase(callback), 100);
+        }
+    }
+
+    waitForFirebase(() => {
+        // Проверяем текущую сессию авторизации
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user && !user.isAnonymous) {
+                // Уже вошли как админ
+                authOverlay.classList.add('hidden');
+                dashboardContent.classList.remove('hidden');
+                document.getElementById('adminEmail').textContent = user.email;
+                initDashboard();
+            }
+        });
+    });
+
+    authForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAuthError();
+
+        const email = document.getElementById('authEmail').value.trim();
+        const password = document.getElementById('authPassword').value;
+        const btn = document.getElementById('authSubmitBtn');
+
+        if (!email || !password) {
+            showAuthError('Заполните оба поля');
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Вход...';
+
+        try {
+            // Если текущий пользователь анонимный — выходим, чтобы войти как админ
+            const currentUser = firebase.auth().currentUser;
+            if (currentUser && currentUser.isAnonymous) {
+                await firebase.auth().signOut();
+            }
+
+            const credential = await firebase.auth().signInWithEmailAndPassword(email, password);
+            const user = credential.user;
+
+            // Проверяем что UID есть в списке админов
+            const adminSnap = await firebase.database().ref(`analytics/admin/uids/${user.uid}`).once('value');
+            if (adminSnap.val() !== true) {
+                await firebase.auth().signOut();
+                // Повторно входим анонимно для трекинга
+                await firebase.auth().signInAnonymously();
+                showAuthError('У этого аккаунта нет прав администратора');
+                btn.disabled = false;
+                btn.textContent = 'Войти';
+                return;
+            }
+
+            authOverlay.classList.add('hidden');
+            dashboardContent.classList.remove('hidden');
+            document.getElementById('adminEmail').textContent = user.email;
+            initDashboard();
+
+        } catch (err) {
+            console.error('Auth error:', err);
+            const messages = {
+                'auth/user-not-found': 'Пользователь не найден',
+                'auth/wrong-password': 'Неверный пароль',
+                'auth/invalid-email': 'Некорректный email',
+                'auth/too-many-requests': 'Слишком много попыток. Подождите.',
+                'auth/invalid-credential': 'Неверный email или пароль'
+            };
+            showAuthError(messages[err.code] || 'Ошибка входа: ' + err.message);
+            btn.disabled = false;
+            btn.textContent = 'Войти';
+        }
+    });
+
+    function adminLogout() {
+        firebase.auth().signOut().then(() => {
+            // Возвращаем анонимную авторизацию
+            firebase.auth().signInAnonymously();
+            dashboardContent.classList.add('hidden');
+            authOverlay.classList.remove('hidden');
+            document.getElementById('authEmail').value = '';
+            document.getElementById('authPassword').value = '';
+        });
+    }
+
+    // =========================================
+    // Dashboard
+    // =========================================
+    let currentChartPeriod = 7;
+    let allStats = null;
+
+    function initDashboard() {
+        if (!window.MxAnalytics || !window.MxAnalytics.isReady()) {
+            setTimeout(initDashboard, 200);
+            return;
+        }
+
+        window.MxAnalytics.onOnlineCount((count, data) => {
+            document.getElementById('onlineCount').textContent = count;
+            document.getElementById('onlineListCount').textContent = `${count} активных`;
+            renderOnlineList(data);
+        });
+
+        window.MxAnalytics.onStats('totals', (totals) => {
+            if (!totals) return;
+            const today = new Date().toISOString().split('T')[0];
+            const todayData = totals.daily?.[today] || {};
+
+            document.getElementById('totalPageviews').textContent = formatNum(totals.pageviews || 0);
+            document.getElementById('totalVisitors').textContent = formatNum(totals.unique_visitors || 0);
+            document.getElementById('totalClicks').textContent = formatNum(totals.clicks || 0);
+            document.getElementById('todayPageviews').textContent = formatNum(todayData.pageviews || 0);
+            document.getElementById('todayVisitors').textContent = formatNum(todayData.unique_visitors || 0);
+        });
+
+        loadAllStats();
+    }
+
+    async function loadAllStats() {
+        allStats = await window.MxAnalytics.getAllStats();
+        if (!allStats) return;
+
+        renderPageviews(allStats.pageviews);
+        renderClicks(allStats.clicks);
+        renderDailyChart(allStats.totals?.daily, currentChartPeriod);
+
+        const today = new Date().toISOString().split('T')[0];
+        let todayClicks = 0;
+        if (allStats.clicks) {
+            Object.values(allStats.clicks).forEach(click => {
+                todayClicks += click.daily?.[today] || 0;
+            });
+        }
+        document.getElementById('todayClicks').textContent = formatNum(todayClicks);
+    }
+
+    function refreshAll() {
+        const btn = document.getElementById('refreshBtn');
+        btn.querySelector('svg').classList.add('refresh-spin');
+        loadAllStats().then(() => {
+            setTimeout(() => btn.querySelector('svg').classList.remove('refresh-spin'), 500);
+        });
+    }
+
+    // =========================================
+    // Renderers
+    // =========================================
+    function renderOnlineList(data) {
+        const container = document.getElementById('onlineList');
+        if (!data || Object.keys(data).length === 0) {
+            container.innerHTML = '<p class="text-gray-500 text-sm">Нет активных пользователей</p>';
+            return;
+        }
+
+        const pageNames = { 'index': 'Главная', 'converter': 'Конвертер', 'colab': 'Google Colab', '404': '404', 'analytics': 'Аналитика' };
+
+        const items = Object.entries(data).map(([id, info]) => {
+            const page = pageNames[info.page] || info.page;
+            const shortId = id.substring(0, 12);
+            return `<div class="online-list-item"><span class="online-dot" style="width:6px;height:6px;"></span><span class="text-gray-400">${shortId}…</span><span class="text-gray-300 ml-auto">${page}</span></div>`;
+        });
+        container.innerHTML = items.join('');
+    }
+
+    function renderPageviews(pageviews) {
+        const container = document.getElementById('pageviewsList');
+        if (!pageviews) { container.innerHTML = '<p class="text-gray-500 text-sm">Нет данных</p>'; return; }
+
+        const pageNames = { 'index': '🏠 Главная', 'converter': '🔧 Конвертер', 'colab': '📒 Google Colab', '404': '❌ 404', 'analytics': '📊 Аналитика' };
+        const sorted = Object.entries(pageviews).map(([page, data]) => ({ page, total: data.total || 0 })).sort((a, b) => b.total - a.total);
+        const maxVal = sorted[0]?.total || 1;
+
+        container.innerHTML = sorted.map(({ page, total }) => {
+            const name = pageNames[page] || page;
+            const width = Math.max((total / maxVal) * 100, 2);
+            return `<div class="table-row"><div class="flex-1"><div class="table-key mb-1">${name}</div><div class="w-full bg-gray-700/30 rounded-full h-1.5"><div class="bg-gradient-to-r from-blue-500 to-purple-500 h-1.5 rounded-full" style="width: ${width}%"></div></div></div><div class="table-value ml-4">${formatNum(total)}</div></div>`;
+        }).join('');
+    }
+
+    function renderClicks(clicks) {
+        const container = document.getElementById('clicksList');
+        if (!clicks) { container.innerHTML = '<p class="text-gray-500 text-sm">Нет данных</p>'; return; }
+
+        const clickNames = {
+            'download--windows-installer': '📦 Windows .msi',
+            'download--windows-portable': '📦 Windows portable',
+            'download--windows-ffmpeg': '📦 Windows FFmpeg',
+            'download--macos-intel': '🍎 macOS Intel',
+            'download--macos-silicon': '🍎 macOS Silicon',
+            'download--macos-intel-ffmpeg': '🍎 macOS Intel FFmpeg',
+            'download--macos-silicon-ffmpeg': '🍎 macOS Silicon FFmpeg',
+            'download--linux-deb': '🐧 Linux .deb',
+            'download--linux-ffmpeg': '🐧 Linux FFmpeg',
+            'share--twitter': '🐦 Share: Twitter',
+            'share--telegram': '✈️ Share: Telegram',
+            'share--reddit': '🟠 Share: Reddit',
+            'colab--poltrain-main': '⚡ PolTrain',
+            'colab--poltrain-backup': '⚡ PolTrain резерв',
+            'colab--poltrain-github': '⚡ PolTrain GitHub',
+            'colab--polgen-main': '🎵 PolGen',
+            'colab--polgen-github': '🎵 PolGen GitHub',
+            'colab--poluvr-main': '🎤 PolUVR',
+            'colab--poluvr-github': '🎤 PolUVR GitHub',
+            'nav--projects': '🧭 Проекты',
+            'nav--contact': '🧭 Контакты',
+            'nav--github-profile': '🧭 GitHub',
+            'nav--colab-page': '🧭 → Colab',
+            'nav--converter-page': '🧭 → Конвертер',
+            'nav--converter-github': '🧭 Конвертер GitHub',
+            'nav--converter-releases': '🧭 Релизы',
+            'nav--converter-issues': '🧭 Issues',
+            'nav--converter-pulls': '🧭 PR'
+        };
+
+        const sorted = Object.entries(clicks).map(([key, data]) => ({ key, total: data.total || 0 })).sort((a, b) => b.total - a.total);
+        if (sorted.length === 0) { container.innerHTML = '<p class="text-gray-500 text-sm">Нет данных</p>'; return; }
+        const maxVal = sorted[0]?.total || 1;
+
+        container.innerHTML = sorted.map(({ key, total }) => {
+            const name = clickNames[key] || key;
+            const width = Math.max((total / maxVal) * 100, 2);
+            return `<div class="table-row"><div class="flex-1"><div class="table-key mb-1">${name}</div><div class="w-full bg-gray-700/30 rounded-full h-1.5"><div class="bg-gradient-to-r from-amber-500 to-orange-500 h-1.5 rounded-full" style="width: ${width}%"></div></div></div><div class="table-value ml-4">${formatNum(total)}</div></div>`;
+        }).join('');
+    }
+
+    function renderDailyChart(daily, days) {
+        const container = document.getElementById('dailyChart');
+        if (!daily) { container.innerHTML = '<p class="text-gray-500 text-sm text-center w-full">Нет данных</p>'; return; }
+
+        const dates = [];
+        for (let i = days - 1; i >= 0; i--) {
+            const d = new Date(); d.setDate(d.getDate() - i);
+            dates.push(d.toISOString().split('T')[0]);
+        }
+        const values = dates.map(date => daily[date]?.pageviews || 0);
+        const maxVal = Math.max(...values, 1);
+
+        container.innerHTML = dates.map((date, i) => {
+            const val = values[i];
+            const h = Math.max((val / maxVal) * 100, 1);
+            const label = new Date(date + 'T12:00:00').toLocaleDateString('ru', { day: 'numeric', month: 'short' });
+            return `<div class="bar-wrapper"><div class="bar-value">${val > 0 ? val : ''}</div><div class="bar" style="height:${h}%" title="${label}: ${val}"></div><div class="bar-label">${label}</div></div>`;
+        }).join('');
+    }
+
+    function formatNum(n) {
+        if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+        if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+        return n.toString();
+    }
+
+    function showTab(tab, btn) {
+        document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
+        document.getElementById(`tab-${tab}`).classList.remove('hidden');
+        btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function setChartPeriod(days, btn) {
+        currentChartPeriod = days;
+        btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (allStats?.totals?.daily) renderDailyChart(allStats.totals.daily, days);
+    }
+
+    function confirmReset() {
+        if (!confirm('Все данные аналитики будут удалены безвозвратно!')) return;
+        if (!confirm('ПОСЛЕДНЕЕ ПРЕДУПРЕЖДЕНИЕ. Точно удалить?')) return;
+
+        const db = window.MxAnalytics.getDatabase();
+        if (db) {
+            // Сохраняем админские UID перед удалением
+            db.ref('analytics/admin').once('value').then(snap => {
+                const adminData = snap.val();
+                return db.ref('analytics').remove().then(() => {
+                    // Восстанавливаем админский узел
+                    if (adminData) {
+                        return db.ref('analytics/admin').set(adminData);
+                    }
+                });
+            }).then(() => {
+                alert('Данные удалены.');
+                location.reload();
+            }).catch(err => {
+                alert('Ошибка: ' + err.message);
+            });
+        }
+    }
+    </script>
+
+    <script src="main.js"></script>
+</body>
+</html>

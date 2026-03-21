@@ -570,3 +570,396 @@ html {
 .status-modal-close:hover {
     color: white;
 }
+
+/* ===== Навбар: статистика ===== */
+.navbar-stats {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    margin-right: 1.5rem;
+}
+
+@media (max-width: 767px) {
+    .navbar-stats {
+        margin-right: 1rem;
+    }
+}
+
+.navbar-online-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.15);
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    color: #4ade80;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.navbar-online-dot {
+    width: 6px;
+    height: 6px;
+    background: #4ade80;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: navbar-pulse 2s infinite;
+}
+
+@keyframes navbar-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+    50% { box-shadow: 0 0 0 4px rgba(74, 222, 128, 0); }
+}
+
+.navbar-online-count {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.navbar-stats-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    border-radius: 0.5rem;
+    color: #60a5fa;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.navbar-stats-btn:hover {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: scale(1.05);
+}
+
+/* ===== Панель статистики ===== */
+.stats-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.stats-panel.active {
+    pointer-events: all;
+    opacity: 1;
+    visibility: visible;
+}
+
+.stats-panel-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+.stats-panel-drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 420px;
+    background: #111827;
+    border-left: 1px solid rgba(75, 85, 99, 0.5);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.stats-panel.active .stats-panel-drawer {
+    transform: translateX(0);
+}
+
+.stats-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+    flex-shrink: 0;
+}
+
+.stats-panel-close {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(55, 65, 81, 0.3);
+    border: 1px solid rgba(75, 85, 99, 0.3);
+    border-radius: 0.5rem;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.stats-panel-close:hover {
+    background: rgba(55, 65, 81, 0.6);
+    color: white;
+}
+
+.stats-panel-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem 1.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: #374151 transparent;
+}
+
+.stats-panel-body::-webkit-scrollbar {
+    width: 4px;
+}
+
+.stats-panel-body::-webkit-scrollbar-thumb {
+    background: #374151;
+    border-radius: 2px;
+}
+
+/* Секции панели */
+.sp-section {
+    margin-bottom: 1.5rem;
+}
+
+.sp-section:last-child {
+    margin-bottom: 0;
+}
+
+.sp-section-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+}
+
+/* Онлайн карточка */
+.sp-online-card {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(34, 197, 94, 0.06);
+    border: 1px solid rgba(34, 197, 94, 0.12);
+    border-radius: 0.75rem;
+}
+
+.sp-online-dot {
+    width: 8px;
+    height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: navbar-pulse 2s infinite;
+}
+
+.sp-online-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #4ade80;
+    font-variant-numeric: tabular-nums;
+}
+
+.sp-online-label {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.sp-online-list {
+    margin-top: 0.5rem;
+}
+
+.sp-online-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    background: rgba(55, 65, 81, 0.2);
+    border-radius: 0.375rem;
+    margin-bottom: 0.25rem;
+}
+
+.sp-online-item-dot {
+    width: 5px;
+    height: 5px;
+    background: #4ade80;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.sp-online-item-page {
+    margin-left: auto;
+    color: #d1d5db;
+    font-weight: 500;
+}
+
+/* Метрики 2x2 */
+.sp-metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.625rem;
+}
+
+.sp-metric {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem;
+    background: rgba(31, 41, 55, 0.5);
+    border: 1px solid rgba(75, 85, 99, 0.3);
+    border-radius: 0.75rem;
+}
+
+.sp-metric-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sp-metric-number {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #f3f4f6;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
+.sp-metric-label {
+    font-size: 0.65rem;
+    color: #6b7280;
+    margin-top: 0.125rem;
+}
+
+/* Списки (страницы, клики) */
+.sp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.sp-list-empty {
+    font-size: 0.8rem;
+    color: #4b5563;
+    padding: 0.5rem 0;
+}
+
+.sp-list-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(31, 41, 55, 0.4);
+    border: 1px solid rgba(75, 85, 99, 0.2);
+    border-radius: 0.5rem;
+    transition: background 0.2s ease;
+}
+
+.sp-list-item:hover {
+    background: rgba(31, 41, 55, 0.7);
+}
+
+.sp-list-item-name {
+    font-size: 0.8rem;
+    color: #d1d5db;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sp-list-item-bar {
+    flex: 0 0 60px;
+    height: 4px;
+    background: rgba(75, 85, 99, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.sp-list-item-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.5s ease;
+}
+
+.sp-list-item-count {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #f3f4f6;
+    font-variant-numeric: tabular-nums;
+    min-width: 2rem;
+    text-align: right;
+}
+
+/* ===== Colab: счётчики кликов ===== */
+.colab-click-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.7rem;
+    color: #6b7280;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.2s ease;
+    margin-left: auto;
+    padding-left: 0.5rem;
+    border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+.colab-click-counter svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0.6;
+}
+
+.colab-click-counter .click-count {
+    font-weight: 600;
+    color: #9ca3af;
+}
+
+.colab-click-counter.loaded .click-count {
+    color: #d1d5db;
+}
+
+.colab-total-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0;
+    margin-top: 0.75rem;
+    border-top: 1px solid rgba(75, 85, 99, 0.3);
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.colab-total-counter svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0.5;
+}
+
+.colab-total-counter .total-count {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #9ca3af;
+}

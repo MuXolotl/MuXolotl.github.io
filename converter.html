@@ -52,7 +52,6 @@
 	<script src="components.js"></script>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen overflow-x-hidden">
-    <!-- Предупреждение для мобильных -->
     <div id="mobileWarning" class="mobile-warning hidden">
         <div class="mobile-warning-content">
             <h3>Только для компьютеров</h3>
@@ -91,13 +90,13 @@
                     <div class="flex items-center gap-3 mt-4">
                         <span class="text-sm text-gray-500">Поделиться:</span>
                         <div class="flex gap-2">
-                            <button data-share="twitter" class="w-9 h-9 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg flex items-center justify-center transition" title="Twitter/X">
+                            <button data-share="twitter" data-track="share:twitter" class="w-9 h-9 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg flex items-center justify-center transition" title="Twitter/X">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                             </button>
-                            <button data-share="telegram" class="w-9 h-9 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg flex items-center justify-center transition" title="Telegram">
+                            <button data-share="telegram" data-track="share:telegram" class="w-9 h-9 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg flex items-center justify-center transition" title="Telegram">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                             </button>
-                            <button data-share="reddit" class="w-9 h-9 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg flex items-center justify-center transition" title="Reddit">
+                            <button data-share="reddit" data-track="share:reddit" class="w-9 h-9 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg flex items-center justify-center transition" title="Reddit">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
                             </button>
                         </div>
@@ -142,13 +141,13 @@
                     </div>
 
                     <div class="flex flex-wrap gap-4">
-                        <a href="#download" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-medium hover:opacity-90 transition flex items-center gap-2">
+                        <a href="#download" data-track="nav:download-section" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-medium hover:opacity-90 transition flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                             </svg>
                             <span>Скачать</span>
                         </a>
-                        <a href="https://github.com/MuXolotl/MuXolotl-Converter" target="_blank" rel="noopener noreferrer" class="px-6 py-3 border border-gray-700 rounded-lg font-medium hover:bg-gray-800 transition flex items-center gap-2">
+                        <a href="https://github.com/MuXolotl/MuXolotl-Converter" target="_blank" rel="noopener noreferrer" data-track="nav:converter-github" class="px-6 py-3 border border-gray-700 rounded-lg font-medium hover:bg-gray-800 transition flex items-center gap-2">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                             </svg>
@@ -326,12 +325,11 @@
                 </div>
 
                 <div id="downloadOptions">
-                    <!-- Windows -->
                     <div id="download-windows" class="download-panel">
                         <div class="mb-4">
                             <label class="block text-sm text-gray-400 mb-3">Тип установки</label>
                             <div class="grid sm:grid-cols-2 gap-3">
-                                <a href="#" data-download="windows-installer" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
+                                <a href="#" data-download="windows-installer" data-track="download:windows-installer" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
                                     <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
                                         <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                     </div>
@@ -340,7 +338,7 @@
                                         <div class="text-sm text-gray-500">Рекомендуется</div>
                                     </div>
                                 </a>
-                                <a href="#" data-download="windows-portable" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
+                                <a href="#" data-download="windows-portable" data-track="download:windows-portable" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
                                     <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
                                         <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                                     </div>
@@ -353,17 +351,16 @@
                         </div>
                         <div class="flex items-center justify-between pt-4 border-t border-gray-700">
                             <span class="text-sm text-gray-500">Windows 10/11 (x64)</span>
-                            <a href="#" data-download="windows-ffmpeg" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
+                            <a href="#" data-download="windows-ffmpeg" data-track="download:windows-ffmpeg" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 FFmpeg бинарники
                             </a>
                         </div>
                     </div>
 
-                    <!-- macOS Intel -->
                     <div id="download-macos-intel" class="download-panel hidden">
                         <div class="mb-4">
-                            <a href="#" data-download="macos-intel" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
+                            <a href="#" data-download="macos-intel" data-track="download:macos-intel" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
                                 <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
                                     <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 </div>
@@ -375,17 +372,16 @@
                         </div>
                         <div class="flex items-center justify-between pt-4 border-t border-gray-700">
                             <span class="text-sm text-gray-500">macOS (Intel x64)</span>
-                            <a href="#" data-download="macos-intel-ffmpeg" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
+                            <a href="#" data-download="macos-intel-ffmpeg" data-track="download:macos-intel-ffmpeg" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 FFmpeg бинарники
                             </a>
                         </div>
                     </div>
 
-                    <!-- macOS Apple Silicon -->
                     <div id="download-macos-arm" class="download-panel hidden">
                         <div class="mb-4">
-                            <a href="#" data-download="macos-silicon" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
+                            <a href="#" data-download="macos-silicon" data-track="download:macos-silicon" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
                                 <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
                                     <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 </div>
@@ -397,17 +393,16 @@
                         </div>
                         <div class="flex items-center justify-between pt-4 border-t border-gray-700">
                             <span class="text-sm text-gray-500">macOS (Apple Silicon)</span>
-                            <a href="#" data-download="macos-silicon-ffmpeg" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
+                            <a href="#" data-download="macos-silicon-ffmpeg" data-track="download:macos-silicon-ffmpeg" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 FFmpeg бинарники
                             </a>
                         </div>
                     </div>
 
-                    <!-- Linux -->
                     <div id="download-linux" class="download-panel hidden">
                         <div class="mb-4">
-                            <a href="#" data-download="linux-deb" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
+                            <a href="#" data-download="linux-deb" data-track="download:linux-deb" class="flex items-center gap-3 p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-500 hover:bg-gray-700 transition group">
                                 <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
                                     <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 </div>
@@ -419,7 +414,7 @@
                         </div>
                         <div class="flex items-center justify-between pt-4 border-t border-gray-700">
                             <span class="text-sm text-gray-500">Linux (x64)</span>
-                            <a href="#" data-download="linux-ffmpeg" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
+                            <a href="#" data-download="linux-ffmpeg" data-track="download:linux-ffmpeg" class="text-sm text-gray-400 hover:text-blue-400 transition flex items-center gap-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 FFmpeg бинарники
                             </a>
@@ -428,7 +423,7 @@
                 </div>
 
                 <div class="mt-6 pt-4 border-t border-gray-700 text-center">
-                    <a href="https://github.com/MuXolotl/MuXolotl-Converter/releases" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-400 hover:text-white transition">
+                    <a href="https://github.com/MuXolotl/MuXolotl-Converter/releases" target="_blank" rel="noopener noreferrer" data-track="nav:converter-releases" class="text-sm text-gray-400 hover:text-white transition">
                         Все версии на GitHub →
                     </a>
                 </div>
@@ -461,13 +456,13 @@
                             MuXolotl-Converter — open source проект. Буду рад любой помощи: исправление багов, новые функции, улучшение документации или просто идеи.
                         </p>
                         <div class="flex flex-wrap gap-3">
-                            <a href="https://github.com/MuXolotl/MuXolotl-Converter/issues" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm hover:bg-gray-700 transition flex items-center gap-2">
+                            <a href="https://github.com/MuXolotl/MuXolotl-Converter/issues" target="_blank" rel="noopener noreferrer" data-track="nav:converter-issues" class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm hover:bg-gray-700 transition flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                                 Сообщить о баге
                             </a>
-                            <a href="https://github.com/MuXolotl/MuXolotl-Converter/pulls" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm hover:bg-gray-700 transition flex items-center gap-2">
+                            <a href="https://github.com/MuXolotl/MuXolotl-Converter/pulls" target="_blank" rel="noopener noreferrer" data-track="nav:converter-pulls" class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm hover:bg-gray-700 transition flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
                                 </svg>
@@ -493,6 +488,10 @@
         <img id="lightboxImg" src="" alt="Screenshot">
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+    <script src="analytics.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
