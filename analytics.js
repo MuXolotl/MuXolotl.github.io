@@ -42,7 +42,6 @@ async function initAnalytics() {
 
         analyticsReady = true;
 
-        cleanStalePresence();
         trackPageView();
         trackVisitor();
         trackPresence();
@@ -67,15 +66,6 @@ function getPageName() {
 
 function getTodayDate() {
     return new Date().toISOString().split('T')[0];
-}
-
-function getSessionId() {
-    let id = sessionStorage.getItem('mx_sid');
-    if (!id) {
-        id = 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 9);
-        sessionStorage.setItem('mx_sid', id);
-    }
-    return id;
 }
 
 function safeIncrement(path) {
@@ -128,26 +118,6 @@ const CLICK_NAMES = {
 };
 
 // =========================================
-// Clean Stale Presence (фикс зависших сессий)
-// =========================================
-function cleanStalePresence() {
-    if (!analyticsReady || !authReady) return;
-
-    const twoMinutesAgo = Date.now() - 2 * 60 * 1000;
-
-    db.ref('analytics/online').once('value', (snap) => {
-        const sessions = snap.val();
-        if (!sessions) return;
-
-        Object.entries(sessions).forEach(([id, data]) => {
-            if (data && data.timestamp && data.timestamp < twoMinutesAgo) {
-                db.ref(`analytics/online/${id}`).remove();
-            }
-        });
-    });
-}
-
-// =========================================
 // Page Views
 // =========================================
 function trackPageView() {
@@ -192,9 +162,11 @@ function trackVisitor() {
 function trackPresence() {
     if (!analyticsReady || !authReady) return;
 
-    const sessionId = getSessionId();
+    const user = firebase.auth().currentUser;
+    if (!user) return;
+
     const page = getPageName();
-    const presenceRef = db.ref(`analytics/online/${sessionId}`);
+    const presenceRef = db.ref(`analytics/online/${user.uid}`);
 
     const connectedRef = db.ref('.info/connected');
     connectedRef.on('value', (snap) => {
@@ -217,13 +189,16 @@ function trackPresence() {
 // =========================================
 const _clickTimestamps = {};
 const CLICK_COOLDOWN_MS = 1000;
+const DOWNLOAD_COOLDOWN_MS = 30 * 1000;
 
 function trackClick(category, action) {
     if (!analyticsReady || !authReady) return;
 
+    const cooldownMs = category === 'download' ? DOWNLOAD_COOLDOWN_MS : CLICK_COOLDOWN_MS;
     const cooldownKey = `${category}:${action}`;
     const now = Date.now();
-    if (_clickTimestamps[cooldownKey] && now - _clickTimestamps[cooldownKey] < CLICK_COOLDOWN_MS) {
+
+    if (_clickTimestamps[cooldownKey] && now - _clickTimestamps[cooldownKey] < cooldownMs) {
         return;
     }
     _clickTimestamps[cooldownKey] = now;
@@ -261,25 +236,23 @@ let _navbarViewsDebounce = null;
 function initNavbarStats() {
     if (!analyticsReady) return;
 
-    // Онлайн — реальное время
     db.ref('analytics/online').on('value', (snap) => {
         const data = snap.val();
         const count = data ? Object.keys(data).length : 0;
 
+        const displayCount = count > 500 ? '500+' : count;
+
         document.querySelectorAll('.navbar-online-count').forEach(el => {
-            el.textContent = count;
+            el.textContent = displayCount;
         });
 
-        // Также обновляем панель статистики
         document.querySelectorAll('.sp-online-number').forEach(el => {
-            el.textContent = count;
+            el.textContent = displayCount;
         });
 
-        // Список онлайн пользователей в панели
         renderOnlineList(data);
     });
 
-    // Просмотры — с debounce чтобы не моргало
     db.ref('analytics/totals/pageviews').on('value', (snap) => {
         const val = snap.val();
         if (val == null) return;
@@ -292,7 +265,6 @@ function initNavbarStats() {
         }, 400);
     });
 
-    // Посетители
     db.ref('analytics/totals/unique_visitors').on('value', (snap) => {
         const val = snap.val();
         if (val == null) return;
@@ -301,7 +273,6 @@ function initNavbarStats() {
         });
     });
 
-    // Клики
     db.ref('analytics/totals/clicks').on('value', (snap) => {
         const val = snap.val();
         if (val == null) return;
@@ -335,13 +306,12 @@ function renderOnlineList(data) {
 }
 
 // =========================================
-// Colab Click Counters (читает каждый ключ отдельно)
+// Colab Click Counters
 // =========================================
 function initColabCounters() {
     const counterElements = document.querySelectorAll('[data-click-key]');
     if (counterElements.length === 0) return;
 
-    // Индивидуальные счётчики на кнопках
     counterElements.forEach(el => {
         const key = el.getAttribute('data-click-key');
         if (!key) return;
@@ -356,7 +326,6 @@ function initColabCounters() {
         });
     });
 
-    // Суммарные счётчики карточек
     document.querySelectorAll('[data-total-keys]').forEach(el => {
         const keys = el.getAttribute('data-total-keys').split(',').map(k => k.trim());
         const counts = {};
@@ -412,15 +381,12 @@ function initStatsPanel() {
 function loadStatsPanelData() {
     if (!analyticsReady) return;
 
-    // Загрузить скачивания из GitHub кэша
     updatePanelDownloads();
 
-    // Страницы
     db.ref('analytics/pageviews').once('value', (snap) => {
         renderPanelPages(snap.val());
     });
 
-    // Клики
     db.ref('analytics/clicks').once('value', (snap) => {
         renderPanelClicks(snap.val());
     });
@@ -520,6 +486,8 @@ function renderPanelClicks(clicks) {
 window.MxAnalytics = {
     getDatabase: () => db,
     isReady: () => analyticsReady && authReady,
+    PAGE_NAMES,
+    CLICK_NAMES,
 
     onOnlineCount: (callback) => {
         if (!analyticsReady) return;

@@ -2,8 +2,8 @@ class AppNavbar extends HTMLElement {
     connectedCallback() {
         const isInner = this.getAttribute('page') === 'inner';
         const rootPath = isInner ? 'index.html' : '#';
-        const imgPath = 'images/icon.png';
-        
+        const imgPath = '/images/icon.png';
+
         const statsBadges = `
             <div class="navbar-stats" id="navbarStats">
                 <div class="navbar-online-badge" id="navbarOnline">
@@ -153,7 +153,7 @@ class AppNavbar extends HTMLElement {
 class AppFooter extends HTMLElement {
     connectedCallback() {
         const currentYear = new Date().getFullYear();
-        const imgPath = 'images/icon.png';
+        const imgPath = '/images/icon.png';
 
         this.innerHTML = `
         <footer class="py-8 px-6 border-t border-gray-800 relative z-10">
