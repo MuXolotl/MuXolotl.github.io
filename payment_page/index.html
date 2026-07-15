@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Способы оплаты • Politrees</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Space Grotesk', 'Inter', system_ui, sans-serif;
+            font-weight: 600;
+        }
+
+        .payment-method {
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -.025em;
+        }
+
+        .copy-btn {
+            transition: all 0.1s ease;
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .address {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.875rem;
+            word-break: break-all;
+        }
+
+        .fee-banner {
+            background: linear-gradient(to right, #451a03, #78350f);
+            border: 1px solid #854d0e;
+        }
+
+        .method-card {
+            border: 1px solid #27251f;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Header -->
+    <div class="border-b border-zinc-800">
+        <div class="max-w-screen-xl mx-auto px-6 py-5">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-indigo-600 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-wallet text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-3xl tracking-tighter heading-font">Politrees</span>
+                    </div>
+                </div>
+                <div class="px-4 py-1.5 bg-zinc-900 rounded-3xl text-sm flex items-center gap-x-2 border border-zinc-800">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <span class="text-emerald-300 text-xs font-medium">Оплата</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-screen-xl mx-auto px-6 py-12">
+        
+        <!-- Hero -->
+        <div class="max-w-2xl mb-10">
+            <h1 class="text-5xl font-bold tracking-tighter heading-font">Способы оплаты</h1>
+            <p class="mt-3 text-xl text-zinc-400">Услугу можно оплатить следующими способами</p>
+        </div>
+
+        <!-- DIRECT BANK TRANSFERS -->
+        <div class="mb-12">
+            <div class="flex items-center gap-x-3 mb-5 px-1">
+                <div class="px-5 py-2.5 bg-zinc-900 border border-zinc-700 rounded-3xl flex items-center gap-x-3">
+                    <i class="fa-solid fa-building-columns text-indigo-400 text-xl"></i>
+                    <span class="font-bold text-2xl section-title">Прямо в банки</span>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+                <!-- Sber -->
+                <div class="payment-method method-card bg-zinc-900 border border-zinc-800 rounded-3xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-x-3">
+                            <i class="fa-brands fa-cc-visa text-emerald-400 text-3xl"></i>
+                            <div>
+                                <div class="font-semibold text-xl">СберБанк</div>
+                                <div class="text-sm text-zinc-400">Артём Евгеньевич В.</div>
+                            </div>
+                        </div>
+                        <span class="text-xs px-3 py-1 bg-emerald-900/40 text-emerald-300 rounded-3xl font-medium">СБП</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between bg-zinc-950 border border-zinc-800 rounded-2xl px-5 py-4">
+                        <div class="flex-1">
+                            <div class="text-xs text-zinc-400 mb-1">Номер карты</div>
+                            <div class="font-mono text-xl font-semibold tracking-[1.5px]">2202 2067 6028 3353</div>
+                        </div>
+                        <button onclick="copyToClipboard('2202206760283353', this)" 
+                                class="copy-btn flex items-center justify-center w-11 h-11 hover:bg-zinc-800 active:bg-zinc-700 transition-colors rounded-2xl border border-zinc-700 text-zinc-400 hover:text-white">
+                            <i class="fa-solid fa-copy text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Tinkoff -->
+                <div class="payment-method method-card bg-zinc-900 border border-zinc-800 rounded-3xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-x-3">
+                            <i class="fa-brands fa-cc-visa text-sky-400 text-3xl"></i>
+                            <div>
+                                <div class="font-semibold text-xl">Т-Банк (Тинькофф)</div>
+                                <div class="text-sm text-zinc-400">Артём Евгеньевич В.</div>
+                            </div>
+                        </div>
+                        <span class="text-xs px-3 py-1 bg-sky-900/40 text-sky-300 rounded-3xl font-medium">СБП</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between bg-zinc-950 border border-zinc-800 rounded-2xl px-5 py-4">
+                        <div class="flex-1">
+                            <div class="text-xs text-zinc-400 mb-1">Номер карты</div>
+                            <div class="font-mono text-xl font-semibold tracking-[1.5px]">4377 7237 6551 7168</div>
+                        </div>
+                        <button onclick="copyToClipboard('4377723765517168', this)" 
+                                class="copy-btn flex items-center justify-center w-11 h-11 hover:bg-zinc-800 active:bg-zinc-700 transition-colors rounded-2xl border border-zinc-700 text-zinc-400 hover:text-white">
+                            <i class="fa-solid fa-copy text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- T-Bank collection -->
+                <div class="payment-method method-card bg-zinc-900 border border-zinc-800 rounded-3xl p-6 md:col-span-2">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-semibold text-xl flex items-center gap-x-3">
+                                <i class="fa-solid fa-link text-amber-400"></i>
+                                <span>Сборы Т-Банк</span>
+                            </div>
+                            <div class="text-sm text-zinc-400 mt-1">Прямой сбор</div>
+                        </div>
+                        
+                        <a href="https://www.tbank.ru/cf/7Tbym2zsBgJ" target="_blank"
+                           class="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 transition-colors text-sm font-semibold rounded-3xl flex items-center gap-x-2 border border-zinc-700">
+                            <span>Открыть сбор</span>
+                            <i class="fa-solid fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Divider -->
+        <div class="h-px bg-zinc-800 my-10"></div>
+        
+        <!-- DONATIONS -->
+        <div class="mb-12">
+            <div class="flex items-center gap-x-3 mb-5 px-1">
+                <div class="px-5 py-2.5 bg-zinc-900 border border-zinc-700 rounded-3xl flex items-center gap-x-3">
+                    <i class="fa-solid fa-heart text-rose-400 text-xl"></i>
+                    <span class="font-bold text-2xl section-title">Донат</span>
+                </div>
+            </div>
+            
+            <!-- VERY PROMINENT FEE BANNER -->
+            <div class="fee-banner mb-5 px-6 py-4 rounded-3xl flex items-center gap-x-4">
+                <div class="flex-shrink-0">
+                    <i class="fa-solid fa-exclamation-triangle text-3xl text-amber-300"></i>
+                </div>
+                <div>
+                    <div class="font-bold text-amber-200 text-xl">Важно!</div>
+                    <div class="text-amber-300 text-lg font-medium">При оплате донатом требуется дополнительная плата: <span class="font-bold text-white">+100 рублей сверху + комиссия сервиса</span>.</div>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-4">
+                <a href="https://www.donationalerts.com/r/politrees" target="_blank"
+                   class="payment-method method-card group flex items-center justify-between bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-600 transition-colors px-6 py-5 rounded-3xl">
+                    <div class="flex items-center gap-x-4">
+                        <i class="fa-solid fa-globe text-2xl text-rose-400 group-hover:scale-110 transition-transform"></i>
+                        <div class="font-semibold text-lg">Donation Alerts</div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-zinc-400 group-hover:text-white transition-colors"></i>
+                </a>
+                
+                <a href="https://dalink.to/politrees" target="_blank"
+                   class="payment-method method-card group flex items-center justify-between bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-600 transition-colors px-6 py-5 rounded-3xl">
+                    <div class="flex items-center gap-x-4">
+                        <i class="fa-solid fa-globe text-2xl text-rose-400 group-hover:scale-110 transition-transform"></i>
+                        <div class="font-semibold text-lg">Donation DALink</div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-zinc-400 group-hover:text-white transition-colors"></i>
+                </a>
+                
+                <a href="https://donatex.gg/donate/politrees" target="_blank"
+                   class="payment-method method-card group flex items-center justify-between bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-600 transition-colors px-6 py-5 rounded-3xl">
+                    <div class="flex items-center gap-x-4">
+                        <i class="fa-solid fa-globe text-2xl text-rose-400 group-hover:scale-110 transition-transform"></i>
+                        <div class="font-semibold text-lg">Donation DonateX</div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-zinc-400 group-hover:text-white transition-colors"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Divider -->
+        <div class="h-px bg-zinc-800 my-10"></div>
+        
+        <!-- CRYPTO -->
+        <div>
+            <div class="flex items-center gap-x-3 mb-5 px-1">
+                <div class="px-5 py-2.5 bg-zinc-900 border border-zinc-700 rounded-3xl flex items-center gap-x-3">
+                    <i class="fa-brands fa-bitcoin text-amber-400 text-xl"></i>
+                    <span class="font-bold text-2xl section-title">Криптой</span>
+                </div>
+            </div>
+            
+            <!-- VERY PROMINENT FEE BANNER -->
+            <div class="fee-banner mb-5 px-6 py-4 rounded-3xl flex items-center gap-x-4">
+                <div class="flex-shrink-0">
+                    <i class="fa-solid fa-exclamation-triangle text-3xl text-amber-300"></i>
+                </div>
+                <div>
+                    <div class="font-bold text-amber-200 text-xl">Важно!</div>
+                    <div class="text-amber-300 text-lg font-medium">При оплате криптой требуется дополнительная плата <span class="font-bold text-white">+500 рублей сверху</span>.</div>
+                </div>
+            </div>
+            
+            <div class="space-y-6">
+                
+                <!-- USDT TON -->
+                <div class="method-card bg-zinc-900 border border-zinc-800 rounded-3xl p-6">
+                    <div class="flex items-center gap-x-2 mb-4">
+                        <span class="font-bold text-xl">USDT (TON)</span>
+                        <span class="px-3 py-px text-xs font-semibold bg-zinc-800 text-zinc-400 rounded-full">TON</span>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-medium px-3 py-1 bg-zinc-800 rounded-2xl text-zinc-400">ТГКошелек</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="address flex-1 text-sm break-all">UQDydC5GOIkQbahziWiA7Qa_wg3gPIs1bYYXsJcxrWsdVkze</div>
+                                <button onclick="copyToClipboard('UQDydC5GOIkQbahziWiA7Qa_wg3gPIs1bYYXsJcxrWsdVkze', this)" class="copy-btn flex-shrink-0 px-4 py-2.5 text-sm flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-zinc-400">
+                                    <i class="fa-solid fa-copy"></i>
+                                    <span class="font-medium text-xs">Копировать</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-medium px-3 py-1 bg-zinc-800 rounded-2xl text-zinc-400">Crypto Bot</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="address flex-1 text-sm break-all">UQC79VUV8KDPsk2hZsef2typ2IvEuGcYOI2ulzASvNaS0dRV</div>
+                                <button onclick="copyToClipboard('UQC79VUV8KDPsk2hZsef2typ2IvEuGcYOI2ulzASvNaS0dRV', this)" class="copy-btn flex-shrink-0 px-4 py-2.5 text-sm flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-zinc-400">
+                                    <i class="fa-solid fa-copy"></i>
+                                    <span class="font-medium text-xs">Копировать</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- USDT TRC20 -->
+                <div class="method-card bg-zinc-900 border border-zinc-800 rounded-3xl p-6">
+                    <div class="flex items-center gap-x-2 mb-4">
+                        <span class="font-bold text-xl">USDT (TRC20)</span>
+                        <span class="px-3 py-px text-xs font-semibold bg-zinc-800 text-zinc-400 rounded-full">TRC20</span>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-medium px-3 py-1 bg-zinc-800 rounded-2xl text-zinc-400">ТГКошелек</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="address flex-1 text-sm break-all">TSX3q84ofkaPmbGboNExa7Ch3ajkJg4bV7</div>
+                                <button onclick="copyToClipboard('TSX3q84ofkaPmbGboNExa7Ch3ajkJg4bV7', this)" class="copy-btn flex-shrink-0 px-4 py-2.5 text-sm flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-zinc-400">
+                                    <i class="fa-solid fa-copy"></i>
+                                    <span class="font-medium text-xs">Копировать</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-medium px-3 py-1 bg-zinc-800 rounded-2xl text-zinc-400">Crypto Bot</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="address flex-1 text-sm break-all">TEbNUKgGq2qtZukLswf4ePs4NQmAfNJrXc</div>
+                                <button onclick="copyToClipboard('TEbNUKgGq2qtZukLswf4ePs4NQmAfNJrXc', this)" class="copy-btn flex-shrink-0 px-4 py-2.5 text-sm flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-zinc-400">
+                                    <i class="fa-solid fa-copy"></i>
+                                    <span class="font-medium text-xs">Копировать</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- USDT ERC20 -->
+                <div class="method-card bg-zinc-900 border border-zinc-800 rounded-3xl p-6">
+                    <div class="flex items-center gap-x-2 mb-4">
+                        <span class="font-bold text-xl">USDT (ERC20)</span>
+                        <span class="px-3 py-px text-xs font-semibold bg-zinc-800 text-zinc-400 rounded-full">ERC20</span>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-medium px-3 py-1 bg-zinc-800 rounded-2xl text-zinc-400">ТГКошелек</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="address flex-1 text-sm break-all">0x597BA37A6679dc9ac1F6E69Df50e529321e5F0dC</div>
+                                <button onclick="copyToClipboard('0x597BA37A6679dc9ac1F6E69Df50e529321e5F0dC', this)" class="copy-btn flex-shrink-0 px-4 py-2.5 text-sm flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-zinc-400">
+                                    <i class="fa-solid fa-copy"></i>
+                                    <span class="font-medium text-xs">Копировать</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-medium px-3 py-1 bg-zinc-800 rounded-2xl text-zinc-400">Crypto Bot</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="address flex-1 text-sm break-all">0x6C4AAF997c8361c6B96038E0C160b304bae78Ec8</div>
+                                <button onclick="copyToClipboard('0x6C4AAF997c8361c6B96038E0C160b304bae78Ec8', this)" class="copy-btn flex-shrink-0 px-4 py-2.5 text-sm flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-zinc-400">
+                                    <i class="fa-solid fa-copy"></i>
+                                    <span class="font-medium text-xs">Копировать</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- USDT SOL -->
+                <div class="method-card bg-zinc-900 border border-zinc-800 rounded-3xl p-6">
+                    <div class="flex items-center gap-x-2 mb-4">
+                        <span class="font-bold text-xl">USDT (SOL/SPL)</span>
+                        <span class="px-3 py-px text-xs font-semibold bg-zinc-800 text-zinc-400 rounded-full">SOL</span>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-medium px-3 py-1 bg-zinc-800 rounded-2xl text-zinc-400">ТГКошелек</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="address flex-1 text-sm break-all">CGvjMdUadUXNdkqbqfKEQNWGrXQGVg2yQ5C8dE14Bqap</div>
+                                <button onclick="copyToClipboard('CGvjMdUadUXNdkqbqfKEQNWGrXQGVg2yQ5C8dE14Bqap', this)" class="copy-btn flex-shrink-0 px-4 py-2.5 text-sm flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-zinc-400">
+                                    <i class="fa-solid fa-copy"></i>
+                                    <span class="font-medium text-xs">Копировать</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-medium px-3 py-1 bg-zinc-800 rounded-2xl text-zinc-400">Crypto Bot</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="address flex-1 text-sm break-all">96biwo1A2wDdUw9DfPENGrWNNeFV9Xhb3HeYwLbY4To4</div>
+                                <button onclick="copyToClipboard('96biwo1A2wDdUw9DfPENGrWNNeFV9Xhb3HeYwLbY4To4', this)" class="copy-btn flex-shrink-0 px-4 py-2.5 text-sm flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-zinc-400">
+                                    <i class="fa-solid fa-copy"></i>
+                                    <span class="font-medium text-xs">Копировать</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Final note -->
+        <div class="mt-12 px-6 py-5 bg-zinc-900 border border-zinc-800 rounded-3xl flex items-center gap-x-4">
+            <i class="fa-solid fa-info-circle text-indigo-400 text-2xl"></i>
+            <span class="font-semibold text-lg">После оплаты обязательно предоставьте скриншот!</span>
+        </div>
+        
+    </div>
+    
+    <script>
+        function copyToClipboard(text, element) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalHTML = element.innerHTML;
+                
+                element.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i>`;
+                element.style.borderColor = '#166534';
+                element.style.backgroundColor = '#14532d';
+                
+                setTimeout(() => {
+                    element.innerHTML = originalHTML;
+                    element.style.borderColor = '';
+                    element.style.backgroundColor = '';
+                }, 1800);
+            }).catch(() => {
+                const input = document.createElement('textarea');
+                input.value = text;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                
+                const originalHTML = element.innerHTML;
+                element.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i>`;
+                
+                setTimeout(() => {
+                    element.innerHTML = originalHTML;
+                }, 1800);
+            });
+        }
+    </script>
+</body>
+</html>
