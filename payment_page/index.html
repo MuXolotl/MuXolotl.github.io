@@ -73,13 +73,21 @@
         </div>
     </div>
 
-    <div class="max-w-screen-xl mx-auto px-6 py-12">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         
         <!-- Hero -->
-        <div class="max-w-2xl mb-10">
-            <h1 class="text-5xl font-bold tracking-tighter heading-font">Способы оплаты</h1>
-            <p class="mt-3 text-xl text-zinc-400">Услугу можно оплатить следующими способами</p>
+        <div class="mb-8 sm:mb-10 text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold tracking-tighter heading-font">Способы оплаты</h1>
+            
+            <!-- Note -->
+            <div class="mt-6 max-w-md mx-auto px-5 py-2 bg-zinc-900 border border-zinc-800 rounded-3xl flex items-center justify-center gap-x-3">
+                <i class="fa-solid fa-info-circle text-indigo-400 text-xl"></i>
+                <span class="font-semibold text-base">После оплаты предоставьте скриншот</span>
+            </div>
         </div>
+
+        <!-- Divider -->
+        <div class="h-px bg-zinc-800 my-10"></div>
 
         <!-- DIRECT BANK TRANSFERS -->
         <div class="mb-12">
@@ -90,7 +98,7 @@
                 </div>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Sber -->
                 <div class="payment-method method-card bg-zinc-900 border border-zinc-800 rounded-3xl p-6">
                     <div class="flex items-center justify-between mb-4">
@@ -180,12 +188,11 @@
                     <i class="fa-solid fa-exclamation-triangle text-3xl text-amber-300"></i>
                 </div>
                 <div>
-                    <div class="font-bold text-amber-200 text-xl">Важно!</div>
                     <div class="text-amber-300 text-lg font-medium">При оплате донатом требуется дополнительная плата: <span class="font-bold text-white">+100 рублей сверху + комиссия сервиса</span>.</div>
                 </div>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <a href="https://www.donationalerts.com/r/politrees" target="_blank"
                    class="payment-method method-card group flex items-center justify-between bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-600 transition-colors px-6 py-5 rounded-3xl">
                     <div class="flex items-center gap-x-4">
@@ -233,7 +240,6 @@
                     <i class="fa-solid fa-exclamation-triangle text-3xl text-amber-300"></i>
                 </div>
                 <div>
-                    <div class="font-bold text-amber-200 text-xl">Важно!</div>
                     <div class="text-amber-300 text-lg font-medium">При оплате криптой требуется дополнительная плата <span class="font-bold text-white">+500 рублей сверху</span>.</div>
                 </div>
             </div>
@@ -384,12 +390,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Final note -->
-        <div class="mt-12 px-6 py-5 bg-zinc-900 border border-zinc-800 rounded-3xl flex items-center gap-x-4">
-            <i class="fa-solid fa-info-circle text-indigo-400 text-2xl"></i>
-            <span class="font-semibold text-lg">После оплаты обязательно предоставьте скриншот!</span>
         </div>
         
     </div>
