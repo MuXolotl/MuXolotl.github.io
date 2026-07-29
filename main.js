@@ -91,7 +91,10 @@ const ASSET_PATTERNS = {
     'linux-ffmpeg':           /linux-x64\.tar\.gz$/i,
 };
 
-async function fetchGitHubStats(repo) {
+// Загружает статистику репозитория и обновляет элементы ВНУТРИ scope
+// (карточка с data-github-repo), чтобы несколько приложений на странице
+// показывали независимую статистику и версию.
+async function fetchGitHubStats(repo, scope = document) {
     const CACHE_KEY = `gh_stats_${repo}`;
     const CACHE_EXPIRATION_MS = 60 * 60 * 1000;
 
@@ -101,7 +104,7 @@ async function fetchGitHubStats(repo) {
         if (cachedRaw) {
             const { timestamp, data, releases } = JSON.parse(cachedRaw);
             if (Date.now() - timestamp < CACHE_EXPIRATION_MS) {
-                if (releases) updateDownloadLinks(releases);
+                if (releases) updateDownloadLinks(releases, scope);
                 return data;
             }
         }
@@ -127,7 +130,7 @@ async function fetchGitHubStats(repo) {
                 });
             });
 
-            updateDownloadLinks(latestRelease);
+            updateDownloadLinks(latestRelease, scope);
         }
 
         const result = {
@@ -151,23 +154,24 @@ async function fetchGitHubStats(repo) {
         const cachedRaw = localStorage.getItem(CACHE_KEY);
         if (cachedRaw) {
             const cache = JSON.parse(cachedRaw);
-            if (cache.releases) updateDownloadLinks(cache.releases);
+            if (cache.releases) updateDownloadLinks(cache.releases, scope);
             return cache.data;
         }
         return null;
     }
 }
 
-function updateDownloadLinks(release) {
+// Обновляет версионные теги и ссылки на скачивание внутри scope
+function updateDownloadLinks(release, scope = document) {
     if (!release?.assets) return;
 
     // Обновляем версионные теги
-    document.querySelectorAll('.version-tag').forEach(el => {
+    scope.querySelectorAll('.version-tag').forEach(el => {
         el.textContent = release.tag_name;
     });
 
     // Обновляем ссылки по regex паттернам
-    document.querySelectorAll('[data-download]').forEach(btn => {
+    scope.querySelectorAll('[data-download]').forEach(btn => {
         const key = btn.dataset.download;
         const pattern = ASSET_PATTERNS[key];
         if (!pattern) return;
@@ -191,11 +195,12 @@ function formatRelativeDate(dateString) {
     return rtf.format(Math.round(diffDays / 365), 'year');
 }
 
-function updateGitHubStatsUI(stats) {
-    const starsEl = document.querySelector('[data-stat="stars"] .count');
-    const forksEl = document.querySelector('[data-stat="forks"] .count');
-    const downloadsEl = document.querySelector('[data-stat="downloads"] .count');
-    const lastUpdateEl = document.getElementById('lastUpdate');
+// Обновляет счётчики звёзд/форков/скачиваний внутри scope
+function updateGitHubStatsUI(stats, scope = document) {
+    const starsEl = scope.querySelector('[data-stat="stars"] .count');
+    const forksEl = scope.querySelector('[data-stat="forks"] .count');
+    const downloadsEl = scope.querySelector('[data-stat="downloads"] .count');
+    const lastUpdateEl = scope.querySelector('#lastUpdate');
 
     if (starsEl && stats) {
         starsEl.textContent = stats.stars;
@@ -459,7 +464,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarousel();
     initColabStatus();
 
-    if (document.querySelector('[data-stat="stars"]')) {
-        fetchGitHubStats('MuXolotl/MuXolotl-Converter').then(updateGitHubStatsUI);
-    }
+    // Загружаем статистику GitHub для каждой карточки приложения (data-github-repo).
+    // Каждая карточка получает независимую статистику и версию своего репозитория.
+    document.querySelectorAll('[data-github-repo]').forEach(el => {
+        fetchGitHubStats(el.dataset.githubRepo, el).then(stats => updateGitHubStatsUI(stats, el));
+    });
 });
