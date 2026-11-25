@@ -1,5 +1,5 @@
 {
     "poltrain": "online",
-    "polgen": "offline",
+    "polgen": "online",
     "poluvr": "online"
 }
