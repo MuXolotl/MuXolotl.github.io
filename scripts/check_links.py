@@ -3,7 +3,7 @@ import json
 
 NOTEBOOKS = {
     "poltrain": "https://drive.google.com/file/d/1BiFIyPUdx0u5CWF3YzwKwjgCs_muk6KJ/view",
-    "polgen": "https://drive.google.com/file/d/1W39tbdYxR1NSVNHG6EDRiKkY4JM0f60B/view",
+    "polgen": "https://colab.research.google.com/github/MuXolotl/MuXVS/blob/main/assets/PolGen_Colab.ipynb",
     "poluvr": "https://drive.google.com/file/d/1jS3rYTeNBeLgjJiSG12HdzH8d1kbkFLj/view"
 }
 
